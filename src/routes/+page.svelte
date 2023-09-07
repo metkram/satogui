@@ -24,13 +24,13 @@
 </script>
 
 <div class="flex flex-col gap-8">
-	<section class="flex gap-4 items-center mt-8">
-		<div>
+	<section class="flex items-center justify-between mt-8">
+		<div class="flex gap-4 items-baseline">
 			<img src="/satogram_logo_only.jpg" alt="Satogram Envelope" class="w-48" />
 			<h1 class="text-8xl">Satogram</h1>
 		</div>
 		<div>
-			<Icon name="moon" />
+			<button><Icon name="moon" /></button>
 		</div>
 	</section>
 	<section>

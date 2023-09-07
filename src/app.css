@@ -3,5 +3,12 @@
 @tailwind utilities;
 
 :root {
-	@apply text-[#333366];
+	--app-background: #fff;
+	--app-color: text-[#333366];
+}
+
+:root.dark {
+	--app-background: #333366;
+	--app-color: #fff;
+	@apply ease-in-out duration-300;
 }
