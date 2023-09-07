@@ -1,0 +1,15 @@
+# /etc/systemd/system/satogui.service
+[Unit]
+Description=Satogram frontend
+After=network.target
+Wants=network-online.target
+
+[Service]
+User=satogui
+Restart=always
+Type=simple
+ExecStart=node /home/satogui/frontend/server/index.js
+EnvironmentFile=/home/satogui/.config/frontend/.env
+
+[Install]
+WantedBy=multi-user.target
