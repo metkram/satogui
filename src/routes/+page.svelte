@@ -1,17 +1,24 @@
-<h1>Satogram</h1>
+<script>
+	import Button from '$components/Button.svelte';
+</script>
 
-<img src="/satogram.jpg" alt="Satogram Envelope" />
-
-<form class="flex flex-col">
-	<label for="budget">Total Budget</label>
-	<input type="text" placeholder="" name="budget" />
-	<label for="amount">Amount Per Satogram</label>
-	<input type="text" placeholder="" name="amount" />
-	<label for="fees">Max Fees</label>
-	<input type="text" placeholder="" name="fees" />
-	<label for="message">Message</label>
-	<input type="text" placeholder="" name="message" />
-</form>
+<section class="flex flex-col items-center my-12">
+	<h1>Satogram</h1>
+	<img src="/satogram_logo_only.jpg" alt="Satogram Envelope" class="w-48" />
+</section>
+<section class="flex flex-col items-center gap-4">
+	<form class="flex flex-col w-96 justify-center">
+		<label for="budget">Total Budget</label>
+		<input type="number" min="1" max="250000" placeholder="" name="budget" required />
+		<label for="amount">Amount Per Satogram</label>
+		<input type="text" placeholder="" name="amount" />
+		<label for="fees">Max Fees</label>
+		<input type="text" placeholder="" name="fees" />
+		<label for="message">Message</label>
+		<input type="text" placeholder="" name="message" />
+	</form>
+	<button type="submit">Create Satogram</button>
+</section>
 
 <style lang="postcss">
 	/* Translate the above input css to tailwind */
