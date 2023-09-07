@@ -1,4 +1,25 @@
 <script lang="ts">
+	import Accordion, { type AccordionItem } from '../features/Accordion.svelte';
+
+	let accordionItems: AccordionItem[] = [
+		{
+			title: 'faq1',
+			content: 'faq1 content'
+		},
+		{
+			title: 'Who can I and can I not send this to?',
+			content:
+				"Wallet of Satoshi, Blue Wallet, Breez, Phoenix, Zap, Muun, and more!\n\nBut you can't send this to Strike, Cashapp"
+		},
+		{
+			title: 'faq1',
+			content: 'faq1 content'
+		},
+		{
+			title: 'faq1',
+			content: 'faq1 content'
+		}
+	];
 </script>
 
 <div class="flex flex-col gap-8">
@@ -9,7 +30,7 @@
 	<section>
 		<h2 class="text-4xl">Send messages to the whole lightning network!</h2>
 	</section>
-	<section class="flex flex-col gap-4">
+	<section class="flex gap-24 justify-between">
 		<form class="flex flex-col w-96 justify-center">
 			<label for="budget">Total Cost (sats)</label>
 			<input
@@ -45,9 +66,11 @@
 			/>
 			<button
 				class="p-4 mt-4 bg-[#e71921] text-white rounded hover:bg-red-700 transition-all"
-				type="submit">Create Satogram</button
-			>
+				type="submit"
+				>Create Satogram
+			</button>
 		</form>
+		<Accordion items={accordionItems} />
 	</section>
 </div>
 
