@@ -33,8 +33,8 @@ cp -r /root/satogui/.svelte-kit/output /home/satogui/frontend
 #
 #
 # enable the service and start it
-systemctl enable satogram_frontend.service
-systemctl start satogram_frontend.service
+systemctl enable satogui.service
+systemctl start satogui.service
 # copy nginx config and enable it
 cp deploy/server-conf /etc/nginx/sites-available/satogram_frontend
 ln -sf /etc/nginx/sites-available/satogram_frontend /etc/nginx/sites-enabled/satogram_frontend
