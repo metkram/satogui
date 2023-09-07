@@ -1,6 +1,6 @@
 import { get, writable } from 'svelte/store';
 
-export const theme = writable<'light' | 'dark'>('light');
+export const theme = writable<'light' | 'dark'>();
 
 export function toggleDarkMode() {
 	const newTheme = get(theme) === 'light' ? 'dark' : 'light';

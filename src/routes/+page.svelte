@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Icon from '$components/Icon/Icon.svelte';
-	import { toggleDarkMode } from '$lib/theme';
+	import { theme, toggleDarkMode } from '$lib/theme';
 	import Accordion, { type AccordionItem } from '../features/Accordion.svelte';
 
 	let accordionItems: AccordionItem[] = [
@@ -22,6 +22,9 @@
 			content: 'faq1 content'
 		}
 	];
+
+	$: icon = $theme === 'dark' ? 'sun' : 'moon';
+	$: console.log({ $theme, icon });
 </script>
 
 <div class="flex flex-col gap-8">
@@ -31,7 +34,7 @@
 			<h1 class="text-8xl">Satogram</h1>
 		</div>
 		<div>
-			<button on:click={toggleDarkMode}><Icon name="moon" /></button>
+			<button on:click={toggleDarkMode}><Icon name={icon} /></button>
 		</div>
 	</section>
 	<section>
