@@ -1,22 +1,23 @@
 <script lang="ts">
+	import Icon from '$components/Icon/Icon.svelte';
 	import Accordion, { type AccordionItem } from '../features/Accordion.svelte';
 
 	let accordionItems: AccordionItem[] = [
 		{
-			title: 'faq1',
-			content: 'faq1 content'
+			title: 'What is this?',
+			content: 'lorem ipsum dolor sit amet. lorem ipsum dolor sit amet. lorem ipsum dolor sit amet.'
 		},
 		{
-			title: 'Who can I and can I not send this to?',
+			title: 'Who can I send this to?',
 			content:
-				"Wallet of Satoshi, Blue Wallet, Breez, Phoenix, Zap, Muun, and more!\n\nBut you can't send this to Strike, Cashapp"
+				"Any node who has keysend enabled. Wallet of Satoshi, Blue Wallet, Breez, Phoenix, Zap, Muun, and more!\n\nBut you can't send this to Strike, Cashapp"
 		},
 		{
-			title: 'faq1',
+			title: 'Why would I do this?',
 			content: 'faq1 content'
 		},
 		{
-			title: 'faq1',
+			title: 'What else you wanna know?',
 			content: 'faq1 content'
 		}
 	];
@@ -24,14 +25,19 @@
 
 <div class="flex flex-col gap-8">
 	<section class="flex gap-4 items-center mt-8">
-		<img src="/satogram_logo_only.jpg" alt="Satogram Envelope" class="w-48" />
-		<h1 class="text-8xl">Satogram</h1>
+		<div>
+			<img src="/satogram_logo_only.jpg" alt="Satogram Envelope" class="w-48" />
+			<h1 class="text-8xl">Satogram</h1>
+		</div>
+		<div>
+			<Icon name="moon" />
+		</div>
 	</section>
 	<section>
 		<h2 class="text-4xl">Send messages to the whole lightning network!</h2>
 	</section>
 	<section class="flex gap-24 justify-between">
-		<form class="flex flex-col w-96 justify-center" method="post" action="?/getinvoice">
+		<form class="flex flex-col w-1/2 justify-center" method="post" action="?/getinvoice">
 			<label for="budget">Total Cost (sats)</label>
 			<input
 				type="number"
@@ -71,7 +77,9 @@
 				Create Satogram
 			</button>
 		</form>
-		<Accordion items={accordionItems} />
+		<div class="w-1/2">
+			<Accordion items={accordionItems} />
+		</div>
 	</section>
 </div>
 
