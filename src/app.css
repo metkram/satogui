@@ -5,10 +5,17 @@
 :root {
 	--app-background: #fff;
 	--app-color: text-[#333366];
+	@apply ease-in-out duration-300;
 }
 
 :root.dark {
 	--app-background: #333366;
 	--app-color: #fff;
 	@apply ease-in-out duration-300;
+}
+
+html {
+	@apply antialiased;
+	background-color: var(--app-background);
+	color: var(--app-color);
 }
