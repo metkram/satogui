@@ -31,14 +31,14 @@
 		<h2 class="text-4xl">Send messages to the whole lightning network!</h2>
 	</section>
 	<section class="flex gap-24 justify-between">
-		<form class="flex flex-col w-96 justify-center">
+		<form class="flex flex-col w-96 justify-center" method="post" action="?/getinvoice">
 			<label for="budget">Total Cost (sats)</label>
 			<input
 				type="number"
 				min="1"
 				max="250000"
 				placeholder="Total cost (amount you will pay)"
-				name="budget"
+				name="totalAmount"
 				required
 			/>
 			<label for="amount">Amount Per Satogram</label>
@@ -47,7 +47,7 @@
 				min="1"
 				max="10000"
 				placeholder="Enter amount to send each node"
-				name="amount"
+				name="amountPerSatogram"
 			/>
 			<label for="fees">Max Fees</label>
 			<input
@@ -55,7 +55,7 @@
 				min="1"
 				max="10000"
 				placeholder="Don't pay fees above this amount"
-				name="fees"
+				name="maxFees"
 			/>
 			<label for="message">Message</label>
 			<input
@@ -67,7 +67,8 @@
 			<button
 				class="p-4 mt-4 bg-[#e71921] text-white rounded hover:bg-red-700 transition-all"
 				type="submit"
-				>Create Satogram
+			>
+				Create Satogram
 			</button>
 		</form>
 		<Accordion items={accordionItems} />
