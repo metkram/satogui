@@ -24,7 +24,6 @@
 	];
 
 	$: icon = $theme === 'dark' ? 'sun' : 'moon';
-	$: console.log({ $theme, icon });
 </script>
 
 <div class="flex flex-col gap-8">
