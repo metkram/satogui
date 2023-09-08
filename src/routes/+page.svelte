@@ -1,7 +1,14 @@
 <script lang="ts">
 	import Icon from '$components/Icon/Icon.svelte';
 	import { theme, toggleDarkMode } from '$lib/theme';
+	import { onMount } from 'svelte';
 	import Accordion, { type AccordionItem } from '../features/Accordion.svelte';
+
+	type ToWhom = {
+		pubkeys: string[];
+		wos_addresses: string[];
+		total_count: number;
+	};
 
 	let accordionItems: AccordionItem[] = [
 		{
@@ -22,8 +29,19 @@
 			content: 'faq1 content'
 		}
 	];
-
+	let toWhom: ToWhom;
 	$: icon = $theme === 'dark' ? 'sun' : 'moon';
+
+	async function fetchToWhom() {
+		try {
+			const result = await fetch('/api/towhom');
+			toWhom = await result.json();
+		} catch (e) {
+			console.error(e);
+		}
+	}
+
+	onMount(fetchToWhom);
 </script>
 
 <div class="flex flex-col gap-8">
@@ -90,7 +108,7 @@
 	/* Translate the above input css to tailwind */
 	input {
 		@apply border border-gray-300 rounded py-2 px-4;
-		@apply text-gray-700 leading-tight focus:outline-none;
-		@apply focus:bg-white focus:border-gray-500;
+		@apply text-gray-300 leading-tight focus:outline-none;
+		@apply focus:border-gray-500 dark:bg-blue-950;
 	}
 </style>

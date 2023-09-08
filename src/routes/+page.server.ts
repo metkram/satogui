@@ -12,7 +12,10 @@ export const actions: Actions = {
 		console.log({ totalAmount, amountPerSatogram, maxFees, message });
 
 		try {
-			return { settled: true };
+			// TODO: use this to get the invoice
+			// const { data } = (await toWhom()) || {};
+			// console.log({ data });
+			// return ;
 		} catch (e) {
 			const err = e as Error;
 			console.error(err.message);
