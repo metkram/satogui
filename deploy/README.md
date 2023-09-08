@@ -29,7 +29,7 @@ cp deploy/satogui.service /etc/systemd/system/satogui.service
 adduser --disabled-login satogui
 # create config location and copy configs
 runuser -l satogui -c 'mkdir -p /home/satogui/.config/frontend/ /home/satogui/frontend/'
-cp .env.example /home/satogui/.config/frontend/.env
+cp .env /home/satogui/.config/frontend/.env
 chown satogui /home/satogui/.config/frontend/.env
 cp -r /root/satogui/build/ /home/satogui/frontend
 cp -r /root/satogui/{package.json,yarn.lock} /home/satogui/frontend/
