@@ -29,7 +29,10 @@ cp deploy/satogui.service /etc/systemd/system/satogui.service
 adduser --disabled-login satogui
 # create config location and copy configs
 runuser -l satogui -c 'mkdir -p /home/satogui/.config/frontend/'
-cp -r /root/satogui/.svelte-kit/output /home/satogui/frontend
+cp .env.example /home/satogui/.config/frontend/.env
+chown satogui /home/satogui/.config/frontend/.env
+cp -r /root/satogui/{package.json,yarn.lock,build} /home/satogui/frontend/
+runuser -l satogui -c 'cd /home/satogui/.config/frontend/ && yarn install --prod --frozen-lockfile'
 #
 #
 # enable the service and start it
@@ -50,5 +53,5 @@ git pull --rebase
 yarn
 yarn build
 cp -r .svelte-kit/output /home/satogui/frontend
-systemctl restart satogram-backend.service
+systemctl restart satogui.service
 ```

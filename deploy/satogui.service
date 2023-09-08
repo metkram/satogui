@@ -9,6 +9,7 @@ User=satogui
 Restart=always
 Type=simple
 ExecStart=node /home/satogui/frontend/server/index.js
+EnvironmentFile=/home/satogui/.config/frontend/.env
 
 [Install]
 WantedBy=multi-user.target
