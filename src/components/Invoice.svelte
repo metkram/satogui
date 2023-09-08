@@ -1,8 +1,16 @@
 <script lang="ts">
 	import QRCode from 'qrcode';
 	import Button from '$components/Button.svelte';
-	import { onDestroy, onMount } from 'svelte';
+	import { createEventDispatcher, onDestroy, onMount } from 'svelte';
 	import Spinner from './Spinner.svelte';
+	import { PaymentStatus } from '$lib/types';
+
+	interface $$Events {
+		paid: CustomEvent;
+		error: CustomEvent<Error>;
+	}
+
+	const dispatch = createEventDispatcher();
 
 	const MAX_CHECK_ATTEMPTS = 100;
 	const POLL_INTERVAL = 3000;
@@ -21,7 +29,7 @@
 		QRCode.toCanvas(canvas, invoice as string, (err: unknown) => {
 			if (err) {
 				console.error(err);
-				error = err as Error;
+				dispatch('error', err as Error);
 			}
 		});
 		polling = true;
@@ -35,24 +43,25 @@
 					throw new Error(result.statusText);
 				}
 				if (result) {
-					const { data } = await result.json();
-					if (data && data.paid) {
+					const { PaymentRequest, Status } = await result.json();
+					if (Status === PaymentStatus.SETTLED) {
 						paid = true;
 						polling = false;
 						clearTimeout(pollInterval);
 						clearTimeout(copyInterval);
+						dispatch('paid');
 					}
 				}
 				pollInterval = setTimeout(pollForPayment, POLL_INTERVAL);
 				checkAttempts++;
 			} catch (e) {
 				console.error(e);
-				error = e as Error;
+				dispatch('error', e as Error);
 				polling = false;
 			}
 		} else if (checkAttempts > MAX_CHECK_ATTEMPTS) {
 			checkAttempts = 0;
-			error = new Error('Timeout, too many checks');
+			dispatch('error', new Error('Too many attempts. Please try again.'));
 			polling = false;
 		}
 	}

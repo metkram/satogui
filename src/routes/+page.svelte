@@ -43,7 +43,7 @@
 	let confetti: JSConfetti;
 
 	$: icon = $theme === 'dark' ? 'sun' : ('moon' as IconName);
-	$: paid && browser && confetti.addConfetti();
+	$: paid && browser && confetti.addConfetti({ emojis: ['⚡️'] });
 
 	async function fetchToWhom() {
 		try {
@@ -60,6 +60,7 @@
 		error = null;
 		form = null;
 		loading = false;
+		paid = false;
 	}
 
 	const onSubmit: SubmitFunction = () => {
@@ -72,12 +73,13 @@
 		};
 	};
 
+	function handlePaid() {
+		paid = true;
+	}
+
 	onMount(() => {
 		fetchToWhom();
 		confetti = new JSConfetti();
-		// confetti.addConfetti({
-		// 	emojis: ['⚡️']
-		// });
 	});
 </script>
 
@@ -102,8 +104,12 @@
 		{/if}
 	</section>
 	<section class="flex gap-24 justify-between">
-		{#if !error && form?.payment_request}
-			<Invoice bind:error bind:paid invoice={form.payment_request} />
+		{#if paid}
+			<Alert mood={Mood.good} title="Success" closed={!paid} {close}>
+				Your satogram has been sent!
+			</Alert>
+		{:else if !error && form?.payment_request}
+			<Invoice bind:error on:paid={handlePaid} invoice={form.payment_request} />
 		{:else}
 			<form
 				class="flex flex-col w-1/2 justify-center"

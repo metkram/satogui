@@ -5,6 +5,11 @@ export enum Mood {
 	neutral = 'neutral'
 }
 
+export enum PaymentStatus {
+	SETTLED = 'SETTLED',
+	OPEN = 'OPEN'
+}
+
 // API types
 
 // GET /api/v1/towhom
@@ -29,5 +34,5 @@ export type SatogramResponse = {
 // GET /api/v1/status/:payment_request
 export type StatusResponse = {
 	payment_request: string;
-	status: string;
+	status: PaymentStatus;
 };
