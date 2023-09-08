@@ -1,3 +1,10 @@
+export enum Mood {
+	good = 'good',
+	bad = 'bad',
+	warn = 'warn',
+	neutral = 'neutral'
+}
+
 // API types
 
 // GET /api/v1/towhom

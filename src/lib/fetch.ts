@@ -32,5 +32,5 @@ export async function createSatogram(payload: SatogramPayload) {
 }
 
 export async function getStatus(paymentRequest: string) {
-	return fetch(`/api/v1/status/${paymentRequest}`);
+	return fetch(`/api/v1/invoice/status/${paymentRequest}`);
 }

@@ -8,20 +8,20 @@
 	const POLL_INTERVAL = 3000;
 
 	let checkAttempts = 0;
-	let error = '';
 	let polling = false;
 	let copyInterval: NodeJS.Timeout;
 	let pollInterval: NodeJS.Timeout;
 
 	export let invoice: string;
 	export let paid = false;
+	export let error: Error | null;
 
 	function createQRCode() {
 		const canvas = document.getElementById('canvas');
 		QRCode.toCanvas(canvas, invoice as string, (err: unknown) => {
 			if (err) {
 				console.error(err);
-				error = err as string;
+				error = err as Error;
 			}
 		});
 		polling = true;
@@ -41,12 +41,12 @@
 				checkAttempts++;
 			} catch (e) {
 				console.error(e);
-				alert(e);
+				error = e as Error;
 				polling = false;
 			}
 		} else if (checkAttempts > MAX_CHECK_ATTEMPTS) {
 			checkAttempts = 0;
-			error = 'Timeout, too many checks';
+			error = new Error('Timeout, too many checks');
 			polling = false;
 		}
 	}
@@ -61,12 +61,11 @@
 	onDestroy(() => clearTimeout(pollInterval));
 </script>
 
-<div class="flex flex-col gap-4 items-center">
-	<canvas id="canvas" />
-	{#if error}
-		<p>{error}</p>
-	{/if}
-	<Spinner />
-	<p>Waiting for payment...</p>
-	<Button on:click={copy}>Copy Invoice</Button>
-</div>
+{#if !error}
+	<div class="flex flex-col gap-4 items-center">
+		<canvas id="canvas" />
+		<Spinner />
+		<p>Waiting for payment...</p>
+		<Button on:click={copy}>Copy Invoice</Button>
+	</div>
+{/if}

@@ -3,14 +3,15 @@
 	import { theme, toggleDarkMode } from '$lib/theme';
 	import { onMount } from 'svelte';
 	import Accordion, { type AccordionItem } from '../features/Accordion.svelte';
-	import type { ToWhomResponse } from '$lib/types';
+	import { Mood, type ToWhomResponse } from '$lib/types';
 	import type { ActionData, PageData } from './$types.js';
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import Button from '$components/Button.svelte';
 	import Invoice from '$components/Invoice.svelte';
+	import Alert from '$components/Alert.svelte';
+	import type { IconName } from '$components/Icon/icons';
 
-	export let data: PageData;
 	export let form: ActionData;
 
 	let accordionItems: AccordionItem[] = [
@@ -32,9 +33,11 @@
 			content: 'faq1 content'
 		}
 	];
+
+	let error: Error | null;
 	let toWhom: ToWhomResponse;
 	let loading = false;
-	$: icon = $theme === 'dark' ? 'sun' : 'moon';
+	$: icon = $theme === 'dark' ? 'sun' : ('moon' as IconName);
 
 	async function fetchToWhom() {
 		try {
@@ -42,8 +45,15 @@
 			toWhom = await result.json();
 		} catch (e) {
 			console.error(e);
-			alert(e);
+			error = e as Error;
+			loading = false;
 		}
+	}
+
+	function close() {
+		error = null;
+		form = null;
+		loading = false;
 	}
 
 	const onSubmit: SubmitFunction = () => {
@@ -52,7 +62,7 @@
 			await setTimeout(async () => {
 				await update({ reset: false });
 				loading = false;
-			}, 2000);
+			}, 1000);
 		};
 	};
 
@@ -72,9 +82,16 @@
 	<section>
 		<h2 class="text-4xl">Send messages to the whole lightning network!</h2>
 	</section>
-	<section class="flex gap-24 justify-around">
-		{#if form?.payment_request}
-			<Invoice invoice={form.payment_request} />
+	<section>
+		{#if form?.error || error}
+			<Alert mood={Mood.bad} title="Error" closed={!error} {close}>
+				{form?.error || error}
+			</Alert>
+		{/if}
+	</section>
+	<section class="flex gap-24 justify-between">
+		{#if !error && form?.payment_request}
+			<Invoice bind:error invoice={form.payment_request} />
 		{:else}
 			<form
 				class="flex flex-col w-1/2 justify-center"
