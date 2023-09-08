@@ -8,8 +8,6 @@
 	export let close = () => {
 		closed = true;
 	};
-
-	$: console.log({ closed });
 </script>
 
 {#if !closed}

@@ -43,7 +43,7 @@
 	let confetti: JSConfetti;
 
 	$: icon = $theme === 'dark' ? 'sun' : ('moon' as IconName);
-	$: paid && browser && confetti.addConfetti({ emojis: ['⚡️'] });
+	$: paid && browser && confetti.addConfetti({ emojis: ['💌'] });
 
 	async function fetchToWhom() {
 		try {
