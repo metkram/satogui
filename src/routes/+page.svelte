@@ -4,6 +4,13 @@
 	import { onMount } from 'svelte';
 	import Accordion, { type AccordionItem } from '../features/Accordion.svelte';
 	import type { ToWhomResponse } from '$lib/types';
+	import type { ActionData, PageData } from './$types.js';
+	import { enhance } from '$app/forms';
+	import type { SubmitFunction } from '@sveltejs/kit';
+	import Spinner from '$components/Spinner.svelte';
+
+	export let data: PageData;
+	export let form: ActionData;
 
 	let accordionItems: AccordionItem[] = [
 		{
@@ -25,6 +32,7 @@
 		}
 	];
 	let toWhom: ToWhomResponse;
+	let loading = false;
 	$: icon = $theme === 'dark' ? 'sun' : 'moon';
 
 	async function fetchToWhom() {
@@ -36,7 +44,19 @@
 		}
 	}
 
+	const onSubmit: SubmitFunction = () => {
+		loading = true;
+		return async ({ update }) => {
+			await setTimeout(async () => {
+				await update({ reset: false });
+				loading = false;
+			}, 5000);
+		};
+	};
+
 	onMount(fetchToWhom);
+
+	$: console.log({ data, form });
 </script>
 
 <div class="flex flex-col gap-8">
@@ -53,7 +73,12 @@
 		<h2 class="text-4xl">Send messages to the whole lightning network!</h2>
 	</section>
 	<section class="flex gap-24 justify-between">
-		<form class="flex flex-col w-1/2 justify-center" method="post" action="?/getinvoice">
+		<form
+			class="flex flex-col w-1/2 justify-center"
+			method="post"
+			action="?/createSatogram"
+			use:enhance={onSubmit}
+		>
 			<label for="budget">Total Cost (sats)</label>
 			<input
 				type="number"
@@ -90,7 +115,11 @@
 				class="p-4 mt-4 bg-[#e71921] text-white rounded hover:bg-red-700 transition-all"
 				type="submit"
 			>
-				Create Satogram
+				{#if loading}
+					<Spinner />
+				{:else}
+					Create Satogram
+				{/if}
 			</button>
 		</form>
 		<div class="w-1/2">
@@ -103,7 +132,7 @@
 	/* Translate the above input css to tailwind */
 	input {
 		@apply border border-gray-300 rounded py-2 px-4;
-		@apply text-gray-300 leading-tight focus:outline-none;
+		@apply dark:text-gray-300 leading-tight focus:outline-none;
 		@apply focus:border-gray-500 dark:bg-blue-950;
 	}
 </style>

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import https from 'https';
 import { API_ENDPOINT } from '$env/static/private';
+import { SatogramPayload } from './types';
 
 const satogram = axios.create({
 	baseURL: API_ENDPOINT,
@@ -8,7 +9,7 @@ const satogram = axios.create({
 		rejectUnauthorized: false
 	})
 	// TODO: headers?
-	// headers: { 'Grpc-Metadata-Macaroon': MACAROON }
+	// headers: { 'X-Custom-Header': 'foobar' }
 });
 
 export async function fetch(url: string, body?: Record<string, unknown>) {
@@ -24,4 +25,13 @@ export async function fetch(url: string, body?: Record<string, unknown>) {
 
 export async function toWhom() {
 	return fetch('/api/v1/towhom');
+}
+
+export async function createSatogram(payload: SatogramPayload) {
+	// returns Promise with payment_request
+	return fetch('/api/v1/satogram', payload);
+}
+
+export async function getStatus(paymentRequest: string) {
+	return fetch(`/api/v1/status/${paymentRequest}`);
 }
