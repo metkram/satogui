@@ -11,6 +11,8 @@
 	import Invoice from '$components/Invoice.svelte';
 	import Alert from '$components/Alert.svelte';
 	import type { IconName } from '$components/Icon/icons';
+	import JSConfetti from 'js-confetti';
+	import { browser } from '$app/environment';
 
 	export let form: ActionData;
 
@@ -37,7 +39,11 @@
 	let error: Error | null;
 	let toWhom: ToWhomResponse;
 	let loading = false;
+	let paid = false;
+	let confetti: JSConfetti;
+
 	$: icon = $theme === 'dark' ? 'sun' : ('moon' as IconName);
+	$: paid && browser && confetti.addConfetti();
 
 	async function fetchToWhom() {
 		try {
@@ -66,7 +72,13 @@
 		};
 	};
 
-	onMount(fetchToWhom);
+	onMount(() => {
+		fetchToWhom();
+		confetti = new JSConfetti();
+		// confetti.addConfetti({
+		// 	emojis: ['⚡️']
+		// });
+	});
 </script>
 
 <div class="flex flex-col gap-8">
@@ -91,7 +103,7 @@
 	</section>
 	<section class="flex gap-24 justify-between">
 		{#if !error && form?.payment_request}
-			<Invoice bind:error invoice={form.payment_request} />
+			<Invoice bind:error bind:paid invoice={form.payment_request} />
 		{:else}
 			<form
 				class="flex flex-col w-1/2 justify-center"

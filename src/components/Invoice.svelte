@@ -35,7 +35,13 @@
 					throw new Error(result.statusText);
 				}
 				if (result) {
-					const r = await result.json();
+					const { data } = await result.json();
+					if (data && data.paid) {
+						paid = true;
+						polling = false;
+						clearTimeout(pollInterval);
+						clearTimeout(copyInterval);
+					}
 				}
 				pollInterval = setTimeout(pollForPayment, POLL_INTERVAL);
 				checkAttempts++;
