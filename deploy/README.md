@@ -19,6 +19,8 @@ cd satogui
 # do nodejs things
 corepack enable
 yarn
+# copy the environment file and set the values
+cp .env.example .env
 # build project
 yarn build
 # copy the service into the systemd folder
@@ -27,8 +29,6 @@ cp deploy/satogui.service /etc/systemd/system/satogui.service
 adduser --disabled-login satogui
 # create config location and copy configs
 runuser -l satogui -c 'mkdir -p /home/satogui/.config/frontend/'
-cp deploy/.env.example /home/satogui/.config/frontend/.env
-chown satogui /home/satogui/.config/frontend/.env
 cp -r /root/satogui/.svelte-kit/output /home/satogui/frontend
 #
 #
