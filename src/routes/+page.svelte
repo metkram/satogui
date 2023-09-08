@@ -3,12 +3,7 @@
 	import { theme, toggleDarkMode } from '$lib/theme';
 	import { onMount } from 'svelte';
 	import Accordion, { type AccordionItem } from '../features/Accordion.svelte';
-
-	type ToWhom = {
-		pubkeys: string[];
-		wos_addresses: string[];
-		total_count: number;
-	};
+	import type { ToWhomResponse } from '$lib/types';
 
 	let accordionItems: AccordionItem[] = [
 		{
@@ -29,7 +24,7 @@
 			content: 'faq1 content'
 		}
 	];
-	let toWhom: ToWhom;
+	let toWhom: ToWhomResponse;
 	$: icon = $theme === 'dark' ? 'sun' : 'moon';
 
 	async function fetchToWhom() {
