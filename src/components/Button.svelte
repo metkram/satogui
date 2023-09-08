@@ -1,21 +1,20 @@
 <script lang="ts">
-	export let secondary = false;
+	import Spinner from './Spinner.svelte';
+
+	export let type: 'button' | 'submit' = 'button';
+	export let loading = false;
 </script>
 
-<button class:secondary on:click>
-	<slot />
+<button {type} on:click>
+	{#if loading}
+		<Spinner />
+	{:else}
+		<slot />
+	{/if}
 </button>
 
-<style>
+<style lang="postcss">
 	button {
-		@apply p-3 rounded-md bg-green-500;
-		@apply transition-all duration-200;
-		@apply border-white border-2;
-	}
-	button:hover {
-		@apply bg-green-600;
-	}
-	.secondary {
-		@apply bg-transparent;
+		@apply p-4 mt-4 bg-[#e71921] text-white rounded hover:bg-red-700 transition-all;
 	}
 </style>

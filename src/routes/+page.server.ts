@@ -18,10 +18,7 @@ export const actions: Actions = {
 			message
 		};
 
-		console.log({ totalAmount, amountPerSatogram, maxFees, message });
-
 		try {
-			// TODO: use this to get the invoice
 			const { data } = (await createSatogram(payload)) || {};
 			return data;
 		} catch (e) {

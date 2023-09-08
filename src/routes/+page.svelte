@@ -7,7 +7,8 @@
 	import type { ActionData, PageData } from './$types.js';
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
-	import Spinner from '$components/Spinner.svelte';
+	import Button from '$components/Button.svelte';
+	import Invoice from '$components/Invoice.svelte';
 
 	export let data: PageData;
 	export let form: ActionData;
@@ -41,6 +42,7 @@
 			toWhom = await result.json();
 		} catch (e) {
 			console.error(e);
+			alert(e);
 		}
 	}
 
@@ -50,13 +52,11 @@
 			await setTimeout(async () => {
 				await update({ reset: false });
 				loading = false;
-			}, 5000);
+			}, 2000);
 		};
 	};
 
 	onMount(fetchToWhom);
-
-	$: console.log({ data, form });
 </script>
 
 <div class="flex flex-col gap-8">
@@ -72,56 +72,51 @@
 	<section>
 		<h2 class="text-4xl">Send messages to the whole lightning network!</h2>
 	</section>
-	<section class="flex gap-24 justify-between">
-		<form
-			class="flex flex-col w-1/2 justify-center"
-			method="post"
-			action="?/createSatogram"
-			use:enhance={onSubmit}
-		>
-			<label for="budget">Total Cost (sats)</label>
-			<input
-				type="number"
-				min="1"
-				max="250000"
-				placeholder="Total cost (amount you will pay)"
-				name="totalAmount"
-				required
-			/>
-			<label for="amount">Amount Per Satogram</label>
-			<input
-				type="number"
-				min="1"
-				max="10000"
-				placeholder="Enter amount to send each node"
-				name="amountPerSatogram"
-			/>
-			<label for="fees">Max Fees</label>
-			<input
-				type="number"
-				min="1"
-				max="10000"
-				placeholder="Don't pay fees above this amount"
-				name="maxFees"
-			/>
-			<label for="message">Message</label>
-			<input
-				type="text"
-				placeholder="What do you want your satogram to say?"
-				name="message"
-				required
-			/>
-			<button
-				class="p-4 mt-4 bg-[#e71921] text-white rounded hover:bg-red-700 transition-all"
-				type="submit"
+	<section class="flex gap-24 justify-around">
+		{#if form?.payment_request}
+			<Invoice invoice={form.payment_request} />
+		{:else}
+			<form
+				class="flex flex-col w-1/2 justify-center"
+				method="post"
+				action="?/createSatogram"
+				use:enhance={onSubmit}
 			>
-				{#if loading}
-					<Spinner />
-				{:else}
-					Create Satogram
-				{/if}
-			</button>
-		</form>
+				<label for="budget">Total Cost (sats)</label>
+				<input
+					type="number"
+					min="1"
+					max="250000"
+					placeholder="Total cost (amount you will pay)"
+					name="totalAmount"
+					required
+				/>
+				<label for="amount">Amount Per Satogram</label>
+				<input
+					type="number"
+					min="1"
+					max="10000"
+					placeholder="Enter amount to send each node"
+					name="amountPerSatogram"
+				/>
+				<label for="fees">Max Fees</label>
+				<input
+					type="number"
+					min="1"
+					max="10000"
+					placeholder="Don't pay fees above this amount"
+					name="maxFees"
+				/>
+				<label for="message">Message</label>
+				<input
+					type="text"
+					placeholder="What do you want your satogram to say?"
+					name="message"
+					required
+				/>
+				<Button {loading} type="submit">Create Satogram</Button>
+			</form>
+		{/if}
 		<div class="w-1/2">
 			<Accordion items={accordionItems} />
 		</div>

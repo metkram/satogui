@@ -2,7 +2,7 @@ import { error, json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { toWhom } from '../../../lib/fetch';
 
-export const GET: RequestHandler = async function ({ request }): Promise<Response> {
+export const GET: RequestHandler = async function (): Promise<Response> {
 	try {
 		const { data } = (await toWhom()) || {};
 		return json(data);
