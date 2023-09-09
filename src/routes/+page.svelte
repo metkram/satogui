@@ -182,26 +182,6 @@
 				</ul>
 			</div>
 		{:else}
-			<section>
-				<form class="flex flex-col justify-center">
-					<label for="lookup">Enter your previous payment request to lookup the invoice</label>
-					<input
-						disabled={loading}
-						type="text"
-						placeholder="lnbc..."
-						bind:value={lookupInvoice}
-						required
-					/>
-					<Button {loading} on:click={() => getSatogramStatus(lookupInvoice)} type="submit"
-						>Lookup</Button
-					>
-				</form>
-			</section>
-			{#if satogramStatus}
-				{JSON.stringify(satogramStatus)}
-			{/if}
-			<strong>OR</strong>
-			<p>Create a new satogram</p>
 			<form class="flex flex-col w-1/2 justify-center">
 				<label for="totalAmount">Total Cost (sats)</label>
 				<input
@@ -242,6 +222,33 @@
 				/>
 				<Button {loading} on:click={createSatogram} type="submit">Create Satogram</Button>
 			</form>
+			{#if toWhom}
+				<div
+					class="break-all flex justify-center border border-gray-500 rounded-md bg-gray-200 dark:bg-transparent"
+				>
+					<pre>{JSON.stringify(toWhom, null, 2)}</pre>
+				</div>
+			{/if}
+			{#if satogramStatus}
+				{JSON.stringify(satogramStatus)}
+			{/if}
+			<strong>OR</strong>
+			<p>Create a new satogram</p>
+			<section>
+				<form class="flex flex-col justify-center">
+					<label for="lookup">Enter your previous payment request to lookup the invoice</label>
+					<input
+						disabled={loading}
+						type="text"
+						placeholder="lnbc..."
+						bind:value={lookupInvoice}
+						required
+					/>
+					<Button {loading} on:click={() => getSatogramStatus(lookupInvoice)} type="submit"
+						>Lookup</Button
+					>
+				</form>
+			</section>
 		{/if}
 		<div>
 			<Accordion items={accordionItems} />
