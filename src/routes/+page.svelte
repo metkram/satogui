@@ -146,37 +146,18 @@
 	});
 </script>
 
-<!-- <svelte:head>
-	<script>
-		import { theme as themeStore } from '$app/stores';
-		const theme = localStorage.getItem('theme');
-		if (theme === 'dark') {
-			document.documentElement.classList.add('dark');
-		} else if (theme === 'light') {
-			document.documentElement.classList.remove('dark');
-		} else {
-			// theme isn't set, use system preference
-			const darkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-			console.log({ dark });
-			if (darkMode) {
-				document.documentElement.classList.add('dark');
-			}
-		}
-	</script>
-</svelte:head> -->
-
-<div class="flex flex-col gap-8">
-	<section class="flex items-center justify-between mt-8">
-		<div class="flex gap-4 items-baseline">
-			<img src="/satogram_logo_only.jpg" alt="Satogram Envelope" class="w-48" />
-			<h1 class="text-8xl">Satogram</h1>
+<div class="flex flex-col gap-4">
+	<section class="flex flex-col md:flex-row items-center justify-between mt-8 gap-4">
+		<div class="gap-8 md:gap-4 md:items-baseline justify-center flex-col flex md:flex-row">
+			<img src="/satogram_logo_only.jpg" alt="Satogram Envelope" class="w-48 mx-auto" />
+			<h1 class="md:text-8xl text-6xl">Satogram</h1>
 		</div>
 		<div>
 			<button on:click={toggleDarkMode}><Icon name={$themeIcon} /></button>
 		</div>
 	</section>
 	<section>
-		<h2 class="text-4xl">Send messages to the whole lightning network!</h2>
+		<h2 class="text-4xl text-center md:text-left">Send messages to the whole lightning network!</h2>
 	</section>
 	<section>
 		{#if error}
@@ -214,16 +195,16 @@
 			</div>
 		{:else}
 			{#if toWhom}
-				<div class="flex justify-around w-full">
-					<div>
+				<div class="flex flex-col md:flex-row justify-between md:justify-around w-full">
+					<div class="flex justify-between md:block">
 						<strong> Total Count: </strong>
 						<span>{toWhom.total_count}</span>
 					</div>
-					<div>
+					<div class="flex justify-between md:block">
 						<strong> Total Count Pubkeys: </strong>
 						<span>{toWhom.total_count_pubkeys}</span>
 					</div>
-					<div>
+					<div class="flex justify-between md:block">
 						<strong> Total Count WOS Addresses: </strong>
 						<span>{toWhom.total_count_wos_addresses}</span>
 					</div>
@@ -231,8 +212,8 @@
 			{:else if loading}
 				<Spinner />
 			{/if}
-			<form class="flex flex-col w-1/2 justify-center">
-				<p>Create a new satogram</p>
+			<form class="flex flex-col md:w-1/2 w-full justify-center">
+				<h3 class="text-xl font-bold">Create a new satogram</h3>
 				<label for="totalAmount">Total Cost (sats)</label>
 				<input
 					type="number"
@@ -272,24 +253,21 @@
 				/>
 				<Button {loading} on:click={createSatogram} type="submit">Create Satogram</Button>
 			</form>
-
 			<strong>OR</strong>
-			<p>Lookup a Satogram</p>
-			<section>
-				<form class="flex flex-col justify-center">
-					<label for="lookup">Enter your previous payment request to lookup the invoice</label>
-					<input
-						disabled={loading}
-						type="text"
-						placeholder="lnbc..."
-						bind:value={lookupInvoice}
-						required
-					/>
-					<Button {loading} on:click={() => getSatogramStatus(lookupInvoice)} type="submit"
-						>Lookup</Button
-					>
-				</form>
-			</section>
+			<h3 class="text-xl font-bold">Check Satogram Status</h3>
+			<form class="flex flex-col justify-center w-full md:w-1/2">
+				<label for="lookup">Enter your previous payment request to lookup the invoice</label>
+				<input
+					disabled={loading}
+					type="text"
+					placeholder="lnbc..."
+					bind:value={lookupInvoice}
+					required
+				/>
+				<Button {loading} on:click={() => getSatogramStatus(lookupInvoice)} type="submit"
+					>Lookup</Button
+				>
+			</form>
 			{#if satogramStatus}
 				<div
 					class="w-full border border-gray-500 bg-gray-200 p-2 rounded-lg dark:bg-gray-500 dark:border-white"
