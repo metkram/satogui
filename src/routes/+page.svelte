@@ -11,6 +11,7 @@
 	import JSConfetti from 'js-confetti';
 	import { browser } from '$app/environment';
 	import { PUBLIC_API_ENDPOINT } from '$env/static/public';
+	import Spinner from '$components/Spinner.svelte';
 
 	let accordionItems: AccordionItem[] = [
 		{
@@ -182,6 +183,24 @@
 				</ul>
 			</div>
 		{:else}
+			{#if toWhom}
+				<div class="flex justify-around w-full">
+					<div>
+						<strong> Total Count: </strong>
+						<span>{toWhom.total_count}</span>
+					</div>
+					<div>
+						<strong> Total Count Pubkeys: </strong>
+						<span>{toWhom.total_count_pubkeys}</span>
+					</div>
+					<div>
+						<strong> Total Count WOS Addresses: </strong>
+						<span>{toWhom.total_count_wos_addresses}</span>
+					</div>
+				</div>
+			{:else if loading}
+				<Spinner />
+			{/if}
 			<form class="flex flex-col w-1/2 justify-center">
 				<label for="totalAmount">Total Cost (sats)</label>
 				<input
@@ -222,13 +241,7 @@
 				/>
 				<Button {loading} on:click={createSatogram} type="submit">Create Satogram</Button>
 			</form>
-			{#if toWhom}
-				<div
-					class="break-all flex justify-center border border-gray-500 rounded-md bg-gray-200 dark:bg-transparent"
-				>
-					<pre>{JSON.stringify(toWhom, null, 2)}</pre>
-				</div>
-			{/if}
+			{#if toWhom}{/if}
 			{#if satogramStatus}
 				{JSON.stringify(satogramStatus)}
 			{/if}
