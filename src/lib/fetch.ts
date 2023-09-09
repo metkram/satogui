@@ -1,13 +1,10 @@
 import axios from 'axios';
-import https from 'https';
-import { API_ENDPOINT } from '$env/static/private';
-import { SatogramPayload } from './types';
+import { PUBLIC_API_ENDPOINT } from '$env/static/public';
+// import { SatogramPayload } from './types';
 
 const satogram = axios.create({
-	baseURL: API_ENDPOINT,
-	httpsAgent: new https.Agent({
-		rejectUnauthorized: false
-	})
+	baseURL: PUBLIC_API_ENDPOINT
+
 	// TODO: headers?
 	// headers: { 'X-Custom-Header': 'foobar' }
 });
@@ -28,7 +25,7 @@ export async function toWhom() {
 	return fetch('/api/v1/towhom');
 }
 
-export async function createSatogram(payload: SatogramPayload) {
+export async function createSatogram(payload: any) {
 	// returns Promise with payment_request
 	return fetch('/api/v1/satogram', payload);
 }

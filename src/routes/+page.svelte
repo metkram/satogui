@@ -13,6 +13,7 @@
 	import type { IconName } from '$components/Icon/icons';
 	import JSConfetti from 'js-confetti';
 	import { browser } from '$app/environment';
+	import { satogramDetails } from '$lib/fetch';
 
 	export let form: ActionData;
 
@@ -41,7 +42,7 @@
 	let loading = false;
 	let paid = false;
 	let confetti: JSConfetti;
-	let satogramDetails: SatogramDetailsPayload;
+	let satogramStatus: SatogramDetailsPayload;
 	let lookupInvoice: string;
 
 	$: icon = $theme === 'dark' ? 'sun' : ('moon' as IconName);
@@ -51,9 +52,11 @@
 
 	async function getSatogramStatus(paymentRequest: string) {
 		try {
-			const result = await fetch(`/api/satogram_status?invoice=${paymentRequest}`);
-			satogramDetails = await result.json();
+			const result = (await satogramDetails(invoice || '')) || {};
+			console.log({ result });
+			// satogramStatus = await result.json();
 		} catch (e) {
+			console.log('ERRORRING');
 			console.error(e);
 			error = e as Error;
 			loading = false;
@@ -96,6 +99,8 @@
 		fetchToWhom();
 		confetti = new JSConfetti();
 	});
+
+	$: console.log({ invoice, error });
 </script>
 
 <div class="flex flex-col gap-8">
@@ -118,10 +123,6 @@
 			</Alert>
 		{/if}
 	</section>
-	<section class="flex flex-col justify-center">
-		<label for="lookup">Enter your previous payment request to lookup the invoice</label>
-		<input type="text" placeholder="lnbc..." bind:value={lookupInvoice} />
-	</section>
 	<section class="flex flex-col gap-4 items-center">
 		{#if paid}
 			<Alert mood={Mood.good} title="Success" closed={!paid} {close}>
@@ -130,8 +131,8 @@
 		{:else if !error && invoice}
 			<div>
 				<Invoice bind:error on:paid={handlePaid} {invoice} />
-				{#if satogramDetails}
-					{@const { satogram_payload } = satogramDetails}
+				<!-- {#if satogramDetails}
+					{@const { satogram_payload } = satogramStatus}
 					{@const { total_cost, amt_per_satogram, max_fees, message } = satogram_payload}
 					<ul class="break-all text-xl mt-8">
 						<li>
@@ -151,16 +152,17 @@
 							<span>{total_cost}</span>
 						</li>
 
-						<!-- <p></p>
-						<p><strong>Amount Per Satogram: </strong><span>{amt_per_satogram}</span></p>
-						<p><strong>Max Fees: </strong><span>{max_fees}</span></p>
-						<p><strong>Total Cost: </strong><span>{total_cost}</span></p> -->
 					</ul>
-				{/if}
+				{/if} -->
 			</div>
 		{:else}
+			<section class="flex flex-col justify-center">
+				<label for="lookup">Enter your previous payment request to lookup the invoice</label>
+				<input disabled={loading} type="text" placeholder="lnbc..." bind:value={lookupInvoice} />
+				<Button {loading} on:click={() => getSatogramStatus(lookupInvoice)}>Lookup</Button>
+			</section>
 			<strong>OR</strong>
-			<p>create a new satogram</p>
+			<p>Create a new satogram</p>
 			<form
 				class="flex flex-col w-1/2 justify-center"
 				method="post"
