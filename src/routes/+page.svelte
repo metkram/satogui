@@ -47,8 +47,8 @@
 	let maxFees: number;
 	let message: string;
 
-	$: icon = $theme && $theme === 'dark' ? 'sun' : ('moon' as IconName);
-	$: $theme && console.log({ $theme });
+	$: icon = $theme === 'dark' ? 'sun' : ('moon' as IconName);
+	$: console.log({ $theme });
 	$: paid && browser && confetti.addConfetti({ emojis: ['💌'] });
 
 	async function getSatogramStatus(paymentRequest: string) {
@@ -58,7 +58,7 @@
 		try {
 			loading = true;
 			const result = await fetch(
-				`${PUBLIC_API_ENDPOINT}/api/v1/status/satogram/${paymentRequest}`,
+				`${PUBLIC_API_ENDPOINT}/api/v1/satogram/status/${paymentRequest}`,
 				{
 					method: 'GET',
 					headers: {
@@ -108,7 +108,7 @@
 					message
 				})
 			});
-			invoice = await result.json();
+			invoice = (await result.json()).payment_request;
 		} catch (e) {
 			console.error(e);
 			error = e as Error;
@@ -141,7 +141,7 @@
 			<h1 class="text-8xl">Satogram</h1>
 		</div>
 		<div>
-			<button on:click={toggleDarkMode}><Icon name={icon} /></button>
+			<button on:click={() => toggleDarkMode()}><Icon name={icon} /></button>
 		</div>
 	</section>
 	<section>
