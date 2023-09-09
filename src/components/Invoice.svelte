@@ -38,7 +38,7 @@
 	async function pollForPayment() {
 		if (checkAttempts < MAX_CHECK_ATTEMPTS) {
 			try {
-				const result = await fetch(`/api/status?invoice=${invoice}`);
+				const result = await fetch(`/api/v1/invoice/status/${invoice}`);
 				if (!result.ok) {
 					throw new Error(result.statusText);
 				}

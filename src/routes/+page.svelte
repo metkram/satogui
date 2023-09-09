@@ -13,7 +13,7 @@
 	import type { IconName } from '$components/Icon/icons';
 	import JSConfetti from 'js-confetti';
 	import { browser } from '$app/environment';
-	import { satogramDetails } from '$lib/fetch';
+	import { PUBLIC_API_ENDPOINT } from '$env/static/public';
 
 	export let form: ActionData;
 
@@ -45,6 +45,12 @@
 	let satogramStatus: SatogramDetailsPayload;
 	let lookupInvoice: string;
 
+	// Satogram form
+	let totalAmount: number;
+	let amountPerSatogram: number;
+	let maxFees: number;
+	let message: string;
+
 	$: icon = $theme === 'dark' ? 'sun' : ('moon' as IconName);
 	$: paid && browser && confetti.addConfetti({ emojis: ['💌'] });
 	$: invoice = form?.payment_request;
@@ -52,24 +58,63 @@
 
 	async function getSatogramStatus(paymentRequest: string) {
 		try {
-			const result = (await satogramDetails(invoice || '')) || {};
+			loading = true;
+			const result = await fetch(`${PUBLIC_API_ENDPOINT}/api/satogram`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ paymentRequest })
+			});
 			console.log({ result });
-			// satogramStatus = await result.json();
+			satogramStatus = await result.json();
 		} catch (e) {
 			console.log('ERRORRING');
 			console.error(e);
 			error = e as Error;
+			loading = false;
+		} finally {
 			loading = false;
 		}
 	}
 
 	async function fetchToWhom() {
 		try {
-			const result = await fetch('/api/towhom');
+			loading = true;
+			const result = await fetch(`${PUBLIC_API_ENDPOINT}/api/toWhom`);
 			toWhom = await result.json();
 		} catch (e) {
 			console.error(e);
 			error = e as Error;
+			loading = false;
+		} finally {
+			loading = false;
+		}
+	}
+
+	async function createSatogram() {
+		try {
+			loading = true;
+			const result = await fetch(`${PUBLIC_API_ENDPOINT}/api/v1/satogram`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					totalAmount,
+					amountPerSatogram,
+					maxFees,
+					message
+				})
+			});
+			console.log({ result });
+			satogramStatus = await result.json();
+		} catch (e) {
+			console.log('ERRORRING');
+			console.error(e);
+			error = e as Error;
+			loading = false;
+		} finally {
 			loading = false;
 		}
 	}
@@ -80,16 +125,6 @@
 		loading = false;
 		paid = false;
 	}
-
-	const onSubmit: SubmitFunction = () => {
-		loading = true;
-		return async ({ update }) => {
-			await setTimeout(async () => {
-				await update({ reset: false });
-				loading = false;
-			}, 1000);
-		};
-	};
 
 	function handlePaid() {
 		paid = true;
@@ -163,12 +198,7 @@
 			</section>
 			<strong>OR</strong>
 			<p>Create a new satogram</p>
-			<form
-				class="flex flex-col w-1/2 justify-center"
-				method="post"
-				action="?/createSatogram"
-				use:enhance={onSubmit}
-			>
+			<form class="flex flex-col w-1/2 justify-center">
 				<label for="budget">Total Cost (sats)</label>
 				<input
 					type="number"
@@ -202,7 +232,7 @@
 					maxlength="800"
 					required
 				/>
-				<Button {loading} type="submit">Create Satogram</Button>
+				<Button {loading} on:click={createSatogram}>Create Satogram</Button>
 			</form>
 		{/if}
 		<div>
