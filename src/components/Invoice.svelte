@@ -44,7 +44,6 @@
 				}
 				if (result) {
 					const data = await result.json();
-					console.log({ data });
 					const { Status } = data;
 					if (Status === PaymentStatus.SETTLED) {
 						paid = true;

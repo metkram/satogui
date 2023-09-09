@@ -51,6 +51,9 @@
 	$: paid && browser && confetti.addConfetti({ emojis: ['💌'] });
 
 	async function getSatogramStatus(paymentRequest: string) {
+		if (!paymentRequest) {
+			return;
+		}
 		try {
 			loading = true;
 			const result = await fetch(`${PUBLIC_API_ENDPOINT}/api/satogram`, {
@@ -60,10 +63,8 @@
 				},
 				body: JSON.stringify({ paymentRequest })
 			});
-			console.log({ result });
 			satogramStatus = await result.json();
 		} catch (e) {
-			console.log('ERRORRING');
 			console.error(e);
 			error = e as Error;
 			loading = false;
@@ -87,6 +88,9 @@
 	}
 
 	async function createSatogram() {
+		if (!totalAmount || !message) {
+			return;
+		}
 		try {
 			loading = true;
 			const result = await fetch(`${PUBLIC_API_ENDPOINT}/api/v1/satogram`, {
@@ -101,10 +105,8 @@
 					message
 				})
 			});
-			console.log({ result });
 			invoice = await result.json();
 		} catch (e) {
-			console.log('ERRORRING');
 			console.error(e);
 			error = e as Error;
 			loading = false;
@@ -177,10 +179,20 @@
 				</ul>
 			</div>
 		{:else}
-			<section class="flex flex-col justify-center">
-				<label for="lookup">Enter your previous payment request to lookup the invoice</label>
-				<input disabled={loading} type="text" placeholder="lnbc..." bind:value={lookupInvoice} />
-				<Button {loading} on:click={() => getSatogramStatus(lookupInvoice)}>Lookup</Button>
+			<section>
+				<form class="flex flex-col justify-center">
+					<label for="lookup">Enter your previous payment request to lookup the invoice</label>
+					<input
+						disabled={loading}
+						type="text"
+						placeholder="lnbc..."
+						bind:value={lookupInvoice}
+						required
+					/>
+					<Button {loading} on:click={() => getSatogramStatus(lookupInvoice)} type="submit"
+						>Lookup</Button
+					>
+				</form>
 			</section>
 			{#if satogramStatus}
 				{JSON.stringify(satogramStatus)}
@@ -225,7 +237,7 @@
 					required
 					bind:value={message}
 				/>
-				<Button {loading} on:click={createSatogram}>Create Satogram</Button>
+				<Button {loading} on:click={createSatogram} type="submit">Create Satogram</Button>
 			</form>
 		{/if}
 		<div>
