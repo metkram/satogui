@@ -56,7 +56,7 @@
 		}
 		try {
 			loading = true;
-			const result = await fetch(`${PUBLIC_API_ENDPOINT}/api/satogram`, {
+			const result = await fetch(`${PUBLIC_API_ENDPOINT}/api/v1/satogram`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
@@ -76,7 +76,7 @@
 	async function fetchToWhom() {
 		try {
 			loading = true;
-			const result = await fetch(`${PUBLIC_API_ENDPOINT}/api/toWhom`);
+			const result = await fetch(`${PUBLIC_API_ENDPOINT}/api/v1/toWhom`);
 			toWhom = await result.json();
 		} catch (e) {
 			console.error(e);
