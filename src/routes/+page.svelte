@@ -280,7 +280,7 @@
 				</div>
 			{/if}
 		{/if}
-		<div>
+		<div class="w-full">
 			<Accordion items={accordionItems} />
 		</div>
 	</section>
@@ -294,7 +294,12 @@
 
 		<p>Is it really spam if I'm paying you?</p>
 
-		<p>This code is all open source here: https://github.com/Satograms/Satogram</p>
+		<p>
+			This code is all open source on <a
+				class="underline"
+				href="https://github.com/Satograms/Satogram">Github</a
+			>
+		</p>
 	</section>
 </div>
 
