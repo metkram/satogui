@@ -51,10 +51,10 @@
 	let invoice: string;
 
 	// Satogram form
-	let totalAmount: number;
-	let amountPerSatogram: number;
-	let maxFees: number;
-	let message: string;
+	let totalAmount: number | null;
+	let amountPerSatogram: number | null;
+	let maxFees: number | null;
+	let message: string | null;
 
 	$: icon = $theme === 'dark' ? 'sun' : ('moon' as IconName);
 	$: console.log({ $theme });
@@ -131,6 +131,10 @@
 		error = null;
 		loading = false;
 		paid = false;
+		totalAmount = null;
+		amountPerSatogram = null;
+		maxFees = null;
+		message = null;
 	}
 
 	function handlePaid() {
@@ -210,6 +214,7 @@
 				<Spinner />
 			{/if}
 			<form class="flex flex-col w-1/2 justify-center">
+				<p>Create a new satogram</p>
 				<label for="totalAmount">Total Cost (sats)</label>
 				<input
 					type="number"
@@ -249,11 +254,9 @@
 				/>
 				<Button {loading} on:click={createSatogram} type="submit">Create Satogram</Button>
 			</form>
-			{#if satogramStatus}
-				{JSON.stringify(satogramStatus, null, 2)}
-			{/if}
+
 			<strong>OR</strong>
-			<p>Create a new satogram</p>
+			<p>Lookup a Satogram</p>
 			<section>
 				<form class="flex flex-col justify-center">
 					<label for="lookup">Enter your previous payment request to lookup the invoice</label>
@@ -269,6 +272,13 @@
 					>
 				</form>
 			</section>
+			{#if satogramStatus}
+				<div
+					class="w-full border border-gray-500 bg-gray-200 p-2 rounded-lg dark:bg-gray-500 dark:border-white"
+				>
+					<pre class="break-all overflow-auto">{JSON.stringify(satogramStatus, null, 2)}</pre>
+				</div>
+			{/if}
 		{/if}
 		<div>
 			<Accordion items={accordionItems} />
