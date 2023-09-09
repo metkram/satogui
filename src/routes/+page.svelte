@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Icon from '$components/Icon/Icon.svelte';
-	import { theme, toggleDarkMode } from '$lib/theme';
+	import { theme, themeIcon, toggleDarkMode } from '$lib/theme';
 	import { onMount } from 'svelte';
 	import Accordion, { type AccordionItem } from '../features/Accordion.svelte';
 	import { Mood, type SatogramDetailsPayload, type ToWhomResponse } from '$lib/types';
@@ -56,7 +56,6 @@
 	let maxFees: number | null;
 	let message: string | null;
 
-	$: icon = $theme === 'dark' ? 'sun' : ('moon' as IconName);
 	$: console.log({ $theme });
 	$: paid && browser && confetti.addConfetti({ emojis: ['💌'] });
 
@@ -147,6 +146,25 @@
 	});
 </script>
 
+<!-- <svelte:head>
+	<script>
+		import { theme as themeStore } from '$app/stores';
+		const theme = localStorage.getItem('theme');
+		if (theme === 'dark') {
+			document.documentElement.classList.add('dark');
+		} else if (theme === 'light') {
+			document.documentElement.classList.remove('dark');
+		} else {
+			// theme isn't set, use system preference
+			const darkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+			console.log({ dark });
+			if (darkMode) {
+				document.documentElement.classList.add('dark');
+			}
+		}
+	</script>
+</svelte:head> -->
+
 <div class="flex flex-col gap-8">
 	<section class="flex items-center justify-between mt-8">
 		<div class="flex gap-4 items-baseline">
@@ -154,7 +172,7 @@
 			<h1 class="text-8xl">Satogram</h1>
 		</div>
 		<div>
-			<button on:click={toggleDarkMode}><Icon name={icon} /></button>
+			<button on:click={toggleDarkMode}><Icon name={$themeIcon} /></button>
 		</div>
 	</section>
 	<section>
