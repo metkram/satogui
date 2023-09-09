@@ -33,6 +33,10 @@ export async function createSatogram(payload: SatogramPayload) {
 	return fetch('/api/v1/satogram', payload);
 }
 
+export async function satogramDetails(paymentRequest: string) {
+	return fetch(`/api/v1/satogram/status/${paymentRequest}`);
+}
+
 export async function getStatus(paymentRequest: string) {
 	return fetch(`/api/v1/invoice/status/${paymentRequest}`);
 }

@@ -36,3 +36,20 @@ export type StatusResponse = {
 	payment_request: string;
 	status: PaymentStatus;
 };
+
+// GET /api/v1/satogram/status/:payment_request
+export type SatogramDetailsPayload = {
+	payment_request: string;
+	satogram_payload: SatogramPayload;
+	satogram_progress: {
+		success_count: number;
+		failure_count: number;
+		kickoff_count: number;
+		finished_count: number;
+		total_cost: number;
+		satogram_status: number;
+	};
+	invoice_states: number;
+	start_process_time: string;
+	end_process_time: string;
+};

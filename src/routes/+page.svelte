@@ -3,7 +3,7 @@
 	import { theme, toggleDarkMode } from '$lib/theme';
 	import { onMount } from 'svelte';
 	import Accordion, { type AccordionItem } from '../features/Accordion.svelte';
-	import { Mood, type ToWhomResponse } from '$lib/types';
+	import { Mood, type SatogramDetailsPayload, type ToWhomResponse } from '$lib/types';
 	import type { ActionData, PageData } from './$types.js';
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
@@ -41,10 +41,23 @@
 	let loading = false;
 	let paid = false;
 	let confetti: JSConfetti;
+	let satogramDetails: SatogramDetailsPayload;
 
 	$: icon = $theme === 'dark' ? 'sun' : ('moon' as IconName);
 	$: paid && browser && confetti.addConfetti({ emojis: ['💌'] });
 	$: invoice = form?.payment_request;
+	$: invoice && getSatogramStatus(invoice);
+
+	async function getSatogramStatus(paymentRequest: string) {
+		try {
+			const result = await fetch(`/api/satogram_status?invoice=${paymentRequest}`);
+			satogramDetails = await result.json();
+		} catch (e) {
+			console.error(e);
+			error = e as Error;
+			loading = false;
+		}
+	}
 
 	async function fetchToWhom() {
 		try {
@@ -106,15 +119,41 @@
 			</Alert>
 		{/if}
 	</section>
-	<section class="flex gap-24 justify-between">
+	<section class="flex flex-col gap-4 items-center">
 		{#if paid}
 			<Alert mood={Mood.good} title="Success" closed={!paid} {close}>
 				Your satogram has been sent!
 			</Alert>
 		{:else if !error && invoice}
-			<Invoice bind:error on:paid={handlePaid} {invoice} />
 			<div>
-				<span />
+				<Invoice bind:error on:paid={handlePaid} {invoice} />
+				{#if satogramDetails}
+					{@const { satogram_payload } = satogramDetails}
+					{@const { total_cost, amt_per_satogram, max_fees, message } = satogram_payload}
+					<ul class="break-all text-xl mt-8">
+						<li>
+							<strong>Message: </strong>
+							<span>{message}</span>
+						</li>
+						<li>
+							<strong>Amount Per Satogram: </strong>
+							<span>{amt_per_satogram}</span>
+						</li>
+						<li>
+							<strong>Max Fees: </strong>
+							<span>{max_fees}</span>
+						</li>
+						<li>
+							<strong>Total Cost: </strong>
+							<span>{total_cost}</span>
+						</li>
+
+						<!-- <p></p>
+						<p><strong>Amount Per Satogram: </strong><span>{amt_per_satogram}</span></p>
+						<p><strong>Max Fees: </strong><span>{max_fees}</span></p>
+						<p><strong>Total Cost: </strong><span>{total_cost}</span></p> -->
+					</ul>
+				{/if}
 			</div>
 		{:else}
 			<form
@@ -153,12 +192,13 @@
 					type="text"
 					placeholder="What do you want your satogram to say?"
 					name="message"
+					maxlength="800"
 					required
 				/>
 				<Button {loading} type="submit">Create Satogram</Button>
 			</form>
 		{/if}
-		<div class="w-1/2">
+		<div>
 			<Accordion items={accordionItems} />
 		</div>
 	</section>
@@ -170,5 +210,14 @@
 		@apply border border-gray-300 rounded py-2 px-4;
 		@apply dark:text-gray-300 leading-tight focus:outline-none;
 		@apply focus:border-gray-500 dark:bg-blue-950;
+	}
+	ul {
+		@apply flex flex-col gap-4;
+	}
+	ul > li {
+		@apply flex justify-between;
+	}
+	ul strong {
+		@apply min-w-fit mr-4;
 	}
 </style>

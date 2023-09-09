@@ -5,6 +5,7 @@
 :root {
 	--app-background: #fff;
 	--app-color: text-[#333366];
+	@apply text-xl;
 	@apply ease-in-out duration-300;
 }
 

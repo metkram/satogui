@@ -43,7 +43,9 @@
 					throw new Error(result.statusText);
 				}
 				if (result) {
-					const { PaymentRequest, Status } = await result.json();
+					const data = await result.json();
+					console.log({ data });
+					const { Status } = data;
 					if (Status === PaymentStatus.SETTLED) {
 						paid = true;
 						polling = false;
