@@ -4,6 +4,7 @@
 	import { createEventDispatcher, onDestroy, onMount } from 'svelte';
 	import Spinner from './Spinner.svelte';
 	import { PaymentStatus } from '$lib/types';
+	import { PUBLIC_API_ENDPOINT } from '$env/static/public';
 
 	interface $$Events {
 		paid: CustomEvent;
@@ -38,7 +39,7 @@
 	async function pollForPayment() {
 		if (checkAttempts < MAX_CHECK_ATTEMPTS) {
 			try {
-				const result = await fetch(`/api/v1/invoice/status/${invoice}`);
+				const result = await fetch(`${PUBLIC_API_ENDPOINT}/api/v1/invoice/status/${invoice}`);
 				if (!result.ok) {
 					throw new Error(result.statusText);
 				}

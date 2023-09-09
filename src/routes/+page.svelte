@@ -141,7 +141,7 @@
 			<h1 class="text-8xl">Satogram</h1>
 		</div>
 		<div>
-			<button on:click={() => toggleDarkMode()}><Icon name={icon} /></button>
+			<button on:click={toggleDarkMode}><Icon name={icon} /></button>
 		</div>
 	</section>
 	<section>

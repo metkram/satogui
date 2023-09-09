@@ -11,7 +11,6 @@
 	</body>
 	<script>
 		import { theme as themeStore } from '$app/stores';
-		import { toggleDarkMode } from '$lib/theme';
 		const theme = localStorage.getItem('theme');
 		if (theme === 'dark') {
 			document.documentElement.classList.add('dark');
@@ -20,11 +19,10 @@
 		} else {
 			// theme isn't set, use system preference
 			const darkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-			console.log('darkMode', darkMode);
 			if (darkMode) {
 				document.documentElement.classList.add('dark');
 			}
-			toggleDarkMode(darkMode ? 'dark' : 'light');
+			// document.documentElement.classList.add('dark');
 		}
 	</script>
 </html>
