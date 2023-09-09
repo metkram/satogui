@@ -47,7 +47,8 @@
 	let maxFees: number;
 	let message: string;
 
-	$: icon = $theme === 'dark' ? 'sun' : ('moon' as IconName);
+	$: icon = $theme && $theme === 'dark' ? 'sun' : ('moon' as IconName);
+	$: $theme && console.log({ $theme });
 	$: paid && browser && confetti.addConfetti({ emojis: ['💌'] });
 
 	async function getSatogramStatus(paymentRequest: string) {
@@ -56,13 +57,15 @@
 		}
 		try {
 			loading = true;
-			const result = await fetch(`${PUBLIC_API_ENDPOINT}/api/v1/satogram`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({ paymentRequest })
-			});
+			const result = await fetch(
+				`${PUBLIC_API_ENDPOINT}/api/v1/status/satogram/${paymentRequest}`,
+				{
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json'
+					}
+				}
+			);
 			satogramStatus = await result.json();
 		} catch (e) {
 			console.error(e);
@@ -76,7 +79,7 @@
 	async function fetchToWhom() {
 		try {
 			loading = true;
-			const result = await fetch(`${PUBLIC_API_ENDPOINT}/api/v1/toWhom`);
+			const result = await fetch(`${PUBLIC_API_ENDPOINT}/api/v1/towhom`);
 			toWhom = await result.json();
 		} catch (e) {
 			console.error(e);
@@ -99,9 +102,9 @@
 					'Content-Type': 'application/json'
 				},
 				body: JSON.stringify({
-					totalAmount,
-					amountPerSatogram,
-					maxFees,
+					total_cost: totalAmount,
+					amt_per_satogram: amountPerSatogram,
+					max_fees: maxFees,
 					message
 				})
 			});
@@ -200,7 +203,7 @@
 			<strong>OR</strong>
 			<p>Create a new satogram</p>
 			<form class="flex flex-col w-1/2 justify-center">
-				<label for="budget">Total Cost (sats)</label>
+				<label for="totalAmount">Total Cost (sats)</label>
 				<input
 					type="number"
 					min="1"
