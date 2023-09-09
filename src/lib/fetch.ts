@@ -14,6 +14,7 @@ const satogram = axios.create({
 
 export async function fetch(url: string, body?: Record<string, unknown>) {
 	try {
+		console.log({ url });
 		const res = body ? satogram.post(url, body) : satogram.get(url);
 		return res;
 	} catch (e) {

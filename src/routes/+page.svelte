@@ -44,6 +44,7 @@
 
 	$: icon = $theme === 'dark' ? 'sun' : ('moon' as IconName);
 	$: paid && browser && confetti.addConfetti({ emojis: ['💌'] });
+	$: invoice = form?.payment_request;
 
 	async function fetchToWhom() {
 		try {
@@ -81,6 +82,8 @@
 		fetchToWhom();
 		confetti = new JSConfetti();
 	});
+
+	$: console.log({ form });
 </script>
 
 <div class="flex flex-col gap-8">
@@ -108,8 +111,11 @@
 			<Alert mood={Mood.good} title="Success" closed={!paid} {close}>
 				Your satogram has been sent!
 			</Alert>
-		{:else if !error && form?.payment_request}
-			<Invoice bind:error on:paid={handlePaid} invoice={form.payment_request} />
+		{:else if !error && invoice}
+			<Invoice bind:error on:paid={handlePaid} {invoice} />
+			<div>
+				<span />
+			</div>
 		{:else}
 			<form
 				class="flex flex-col w-1/2 justify-center"
