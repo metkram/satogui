@@ -4,9 +4,6 @@
 	import { onMount } from 'svelte';
 	import Accordion, { type AccordionItem } from '../features/Accordion.svelte';
 	import { Mood, type SatogramDetailsPayload, type ToWhomResponse } from '$lib/types';
-	import type { ActionData, PageData } from './$types.js';
-	import { enhance } from '$app/forms';
-	import type { SubmitFunction } from '@sveltejs/kit';
 	import Button from '$components/Button.svelte';
 	import Invoice from '$components/Invoice.svelte';
 	import Alert from '$components/Alert.svelte';
@@ -14,8 +11,6 @@
 	import JSConfetti from 'js-confetti';
 	import { browser } from '$app/environment';
 	import { PUBLIC_API_ENDPOINT } from '$env/static/public';
-
-	export let form: ActionData;
 
 	let accordionItems: AccordionItem[] = [
 		{
@@ -44,6 +39,7 @@
 	let confetti: JSConfetti;
 	let satogramStatus: SatogramDetailsPayload;
 	let lookupInvoice: string;
+	let invoice: string;
 
 	// Satogram form
 	let totalAmount: number;
@@ -53,8 +49,6 @@
 
 	$: icon = $theme === 'dark' ? 'sun' : ('moon' as IconName);
 	$: paid && browser && confetti.addConfetti({ emojis: ['💌'] });
-	$: invoice = form?.payment_request;
-	$: invoice && getSatogramStatus(invoice);
 
 	async function getSatogramStatus(paymentRequest: string) {
 		try {
@@ -108,7 +102,7 @@
 				})
 			});
 			console.log({ result });
-			satogramStatus = await result.json();
+			invoice = await result.json();
 		} catch (e) {
 			console.log('ERRORRING');
 			console.error(e);
@@ -121,7 +115,6 @@
 
 	function close() {
 		error = null;
-		form = null;
 		loading = false;
 		paid = false;
 	}
@@ -134,8 +127,6 @@
 		fetchToWhom();
 		confetti = new JSConfetti();
 	});
-
-	$: console.log({ invoice, error });
 </script>
 
 <div class="flex flex-col gap-8">
@@ -152,9 +143,9 @@
 		<h2 class="text-4xl">Send messages to the whole lightning network!</h2>
 	</section>
 	<section>
-		{#if form?.error || error}
+		{#if error}
 			<Alert mood={Mood.bad} title="Error" closed={!error} {close}>
-				{form?.error || error}
+				{error}
 			</Alert>
 		{/if}
 	</section>
@@ -166,29 +157,24 @@
 		{:else if !error && invoice}
 			<div>
 				<Invoice bind:error on:paid={handlePaid} {invoice} />
-				<!-- {#if satogramDetails}
-					{@const { satogram_payload } = satogramStatus}
-					{@const { total_cost, amt_per_satogram, max_fees, message } = satogram_payload}
-					<ul class="break-all text-xl mt-8">
-						<li>
-							<strong>Message: </strong>
-							<span>{message}</span>
-						</li>
-						<li>
-							<strong>Amount Per Satogram: </strong>
-							<span>{amt_per_satogram}</span>
-						</li>
-						<li>
-							<strong>Max Fees: </strong>
-							<span>{max_fees}</span>
-						</li>
-						<li>
-							<strong>Total Cost: </strong>
-							<span>{total_cost}</span>
-						</li>
-
-					</ul>
-				{/if} -->
+				<ul class="break-all text-xl mt-8">
+					<li>
+						<strong>Message: </strong>
+						<span>{message}</span>
+					</li>
+					<li>
+						<strong>Amount Per Satogram: </strong>
+						<span>{amountPerSatogram}</span>
+					</li>
+					<li>
+						<strong>Max Fees: </strong>
+						<span>{maxFees}</span>
+					</li>
+					<li>
+						<strong>Total Cost: </strong>
+						<span>{totalAmount}</span>
+					</li>
+				</ul>
 			</div>
 		{:else}
 			<section class="flex flex-col justify-center">
@@ -196,6 +182,9 @@
 				<input disabled={loading} type="text" placeholder="lnbc..." bind:value={lookupInvoice} />
 				<Button {loading} on:click={() => getSatogramStatus(lookupInvoice)}>Lookup</Button>
 			</section>
+			{#if satogramStatus}
+				{JSON.stringify(satogramStatus)}
+			{/if}
 			<strong>OR</strong>
 			<p>Create a new satogram</p>
 			<form class="flex flex-col w-1/2 justify-center">
@@ -207,6 +196,7 @@
 					placeholder="Total cost (amount you will pay)"
 					name="totalAmount"
 					required
+					bind:value={totalAmount}
 				/>
 				<label for="amount">Amount Per Satogram</label>
 				<input
@@ -215,6 +205,7 @@
 					max="10000"
 					placeholder="Enter amount to send each node"
 					name="amountPerSatogram"
+					bind:value={amountPerSatogram}
 				/>
 				<label for="fees">Max Fees</label>
 				<input
@@ -223,6 +214,7 @@
 					max="10000"
 					placeholder="Don't pay fees above this amount"
 					name="maxFees"
+					bind:value={maxFees}
 				/>
 				<label for="message">Message</label>
 				<input
@@ -231,6 +223,7 @@
 					name="message"
 					maxlength="800"
 					required
+					bind:value={message}
 				/>
 				<Button {loading} on:click={createSatogram}>Create Satogram</Button>
 			</form>
