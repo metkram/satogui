@@ -15,21 +15,29 @@
 
 	let accordionItems: AccordionItem[] = [
 		{
-			title: 'What is this?',
-			content: 'lorem ipsum dolor sit amet. lorem ipsum dolor sit amet. lorem ipsum dolor sit amet.'
+			title: 'What are Satograms?',
+			content:
+				'Satograms are lightning keysend payments that include a custom message. Think of it like spam email, but you get paid for it. When you receive a Satogram you have been paid by the sender! Reach out to thousands of people with your own custom message of up to ~1000 characters in only a few minutes.'
 		},
 		{
-			title: 'Who can I send this to?',
+			title: 'Who Can I send this to?',
 			content:
-				"Any node who has keysend enabled. Wallet of Satoshi, Blue Wallet, Breez, Phoenix, Zap, Muun, and more!\n\nBut you can't send this to Strike, Cashapp"
+				'You can send Satograms to any node who have keysends enabled or currently to any Wallet of Satoshi lightning address. Reach out to ~10 thousand people with your own custom message of up to ~1000 characters in only a few minutes.'
 		},
 		{
 			title: 'Why would I do this?',
-			content: 'faq1 content'
+			content:
+				'Whether you are a brand who wants to advertise your product, or a pleb who wants to wish the network a good morning, Satograms allow you to put your messaging directly in front of users. Folks are a lot more receptive to "spam" messaging if they are getting paid for it.'
 		},
 		{
-			title: 'What else you wanna know?',
-			content: 'faq1 content'
+			title: 'Future',
+			content:
+				'Currently Wallet of Saotshi is the first custodial wallet provider to offer their users support for Satograms. If you want to integrate Satogram support for your users, checkout our README in our github. Adding Satogram support is low effort and could be adopted by more custodial providers in the future (Strike? Cash App?). We will continue to grow our list of pubkeys and lightning addresses that we Satogram to, and if you have not received one reach out to us!'
+		},
+		{
+			title: 'How much does this cost? How many people will receive my Satograms?',
+			content:
+				'We charge a 10% fee for our service. For example, if you pay our invoice for 10,000 sats, we will send out 9,000 sats worth of Satograms. Note that ligthning network fees are not entirely known up front, and this makes calculating with certainty how many Satograms will be sent using this 9,000 sat budget.'
 		}
 	];
 
@@ -241,9 +249,8 @@
 				/>
 				<Button {loading} on:click={createSatogram} type="submit">Create Satogram</Button>
 			</form>
-			{#if toWhom}{/if}
 			{#if satogramStatus}
-				{JSON.stringify(satogramStatus)}
+				{JSON.stringify(satogramStatus, null, 2)}
 			{/if}
 			<strong>OR</strong>
 			<p>Create a new satogram</p>
@@ -266,6 +273,18 @@
 		<div>
 			<Accordion items={accordionItems} />
 		</div>
+	</section>
+	<section class="flex flex-col gap-4">
+		<p>Problems? Rug pulled? Comments?</p>
+
+		<p>
+			Contact "customer support" by reaching out to <strong>@BitcoinCoderBob</strong> on X, Nostr, or
+			Telegram.
+		</p>
+
+		<p>Is it really spam if I'm paying you?</p>
+
+		<p>This code is all open source here: https://github.com/Satograms/Satogram</p>
 	</section>
 </div>
 
