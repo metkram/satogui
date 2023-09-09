@@ -42,6 +42,7 @@
 	let paid = false;
 	let confetti: JSConfetti;
 	let satogramDetails: SatogramDetailsPayload;
+	let lookupInvoice: string;
 
 	$: icon = $theme === 'dark' ? 'sun' : ('moon' as IconName);
 	$: paid && browser && confetti.addConfetti({ emojis: ['💌'] });
@@ -95,8 +96,6 @@
 		fetchToWhom();
 		confetti = new JSConfetti();
 	});
-
-	$: console.log({ form });
 </script>
 
 <div class="flex flex-col gap-8">
@@ -118,6 +117,10 @@
 				{form?.error || error}
 			</Alert>
 		{/if}
+	</section>
+	<section class="flex flex-col justify-center">
+		<label for="lookup">Enter your previous payment request to lookup the invoice</label>
+		<input type="text" placeholder="lnbc..." bind:value={lookupInvoice} />
 	</section>
 	<section class="flex flex-col gap-4 items-center">
 		{#if paid}
@@ -156,6 +159,8 @@
 				{/if}
 			</div>
 		{:else}
+			<strong>OR</strong>
+			<p>create a new satogram</p>
 			<form
 				class="flex flex-col w-1/2 justify-center"
 				method="post"
