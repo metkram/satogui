@@ -22,7 +22,9 @@
 	}
 </script>
 
-<div class="border-2 border-[#333366] rounded-lg flex flex-col justify-between p-4 w-full">
+<div
+	class="border-2 border-[#333366] dark:border-white rounded-lg flex flex-col justify-between p-4 w-full"
+>
 	<span class="pb-2 text-xl border-b-2 border-b-[#e71921]">{title}</span>
 	{#each items as { title, content }, i}
 		<div class="">

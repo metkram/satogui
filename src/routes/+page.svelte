@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Icon from '$components/Icon/Icon.svelte';
-	import { theme, toggleDarkMode } from '$lib/theme';
+	import { theme, themeIcon, toggleDarkMode } from '$lib/theme';
 	import { onMount } from 'svelte';
 	import Accordion, { type AccordionItem } from '../features/Accordion.svelte';
 	import { Mood, type SatogramDetailsPayload, type ToWhomResponse } from '$lib/types';
@@ -11,24 +11,33 @@
 	import JSConfetti from 'js-confetti';
 	import { browser } from '$app/environment';
 	import { PUBLIC_API_ENDPOINT } from '$env/static/public';
+	import Spinner from '$components/Spinner.svelte';
 
 	let accordionItems: AccordionItem[] = [
 		{
-			title: 'What is this?',
-			content: 'lorem ipsum dolor sit amet. lorem ipsum dolor sit amet. lorem ipsum dolor sit amet.'
+			title: 'What are Satograms?',
+			content:
+				'Satograms are lightning keysend payments that include a custom message. Think of it like spam email, but you get paid for it. When you receive a Satogram you have been paid by the sender! Reach out to thousands of people with your own custom message of up to ~1000 characters in only a few minutes.'
 		},
 		{
-			title: 'Who can I send this to?',
+			title: 'Who Can I send this to?',
 			content:
-				"Any node who has keysend enabled. Wallet of Satoshi, Blue Wallet, Breez, Phoenix, Zap, Muun, and more!\n\nBut you can't send this to Strike, Cashapp"
+				'You can send Satograms to any node who have keysends enabled or currently to any Wallet of Satoshi lightning address. Reach out to ~10 thousand people with your own custom message of up to ~1000 characters in only a few minutes.'
 		},
 		{
 			title: 'Why would I do this?',
-			content: 'faq1 content'
+			content:
+				'Whether you are a brand who wants to advertise your product, or a pleb who wants to wish the network a good morning, Satograms allow you to put your messaging directly in front of users. Folks are a lot more receptive to "spam" messaging if they are getting paid for it.'
 		},
 		{
-			title: 'What else you wanna know?',
-			content: 'faq1 content'
+			title: 'Future',
+			content:
+				'Currently Wallet of Saotshi is the first custodial wallet provider to offer their users support for Satograms. If you want to integrate Satogram support for your users, checkout our README in our github. Adding Satogram support is low effort and could be adopted by more custodial providers in the future (Strike? Cash App?). We will continue to grow our list of pubkeys and lightning addresses that we Satogram to, and if you have not received one reach out to us!'
+		},
+		{
+			title: 'How much does this cost? How many people will receive my Satograms?',
+			content:
+				'We charge a 10% fee for our service. For example, if you pay our invoice for 10,000 sats, we will send out 9,000 sats worth of Satograms. Note that ligthning network fees are not entirely known up front, and this makes calculating with certainty how many Satograms will be sent using this 9,000 sat budget.'
 		}
 	];
 
@@ -42,12 +51,11 @@
 	let invoice: string;
 
 	// Satogram form
-	let totalAmount: number;
-	let amountPerSatogram: number;
-	let maxFees: number;
-	let message: string;
+	let totalAmount: number | null;
+	let amountPerSatogram: number | null;
+	let maxFees: number | null;
+	let message: string | null;
 
-	$: icon = $theme === 'dark' ? 'sun' : ('moon' as IconName);
 	$: console.log({ $theme });
 	$: paid && browser && confetti.addConfetti({ emojis: ['📨'] });
 
@@ -122,6 +130,10 @@
 		error = null;
 		loading = false;
 		paid = false;
+		totalAmount = null;
+		amountPerSatogram = null;
+		maxFees = null;
+		message = null;
 	}
 
 	function handlePaid() {
@@ -134,18 +146,18 @@
 	});
 </script>
 
-<div class="flex flex-col gap-8">
-	<section class="flex items-center justify-between mt-8">
-		<div class="flex gap-4 items-baseline">
-			<img src="/satogram_logo_only.jpg" alt="Satogram Envelope" class="w-48" />
-			<h1 class="text-8xl">Satogram</h1>
+<div class="flex flex-col gap-4">
+	<section class="flex flex-col md:flex-row items-center justify-between mt-8 gap-4">
+		<div class="gap-8 md:gap-4 md:items-baseline justify-center flex-col flex md:flex-row">
+			<img src="/satogram_logo_only.jpg" alt="Satogram Envelope" class="w-48 mx-auto" />
+			<h1 class="md:text-8xl text-6xl">Satogram</h1>
 		</div>
 		<div>
-			<button on:click={toggleDarkMode}><Icon name={icon} /></button>
+			<button on:click={toggleDarkMode}><Icon name={$themeIcon} /></button>
 		</div>
 	</section>
 	<section>
-		<h2 class="text-4xl">Send messages to the whole lightning network!</h2>
+		<h2 class="text-4xl text-center md:text-left">Send messages to (most of) the lightning network!</h2>
 	</section>
 	<section>
 		{#if error}
@@ -157,7 +169,7 @@
 	<section class="flex flex-col gap-4 items-center">
 		{#if paid}
 			<Alert mood={Mood.good} title="Success" closed={!paid} {close}>
-				Your satogram has been sent!
+				Your Satogram has been sent!
 			</Alert>
 		{:else if !error && invoice}
 			<div>
@@ -182,33 +194,38 @@
 				</ul>
 			</div>
 		{:else}
-			<section>
-				<form class="flex flex-col justify-center">
-					<label for="lookup">Enter your previous payment request to lookup the invoice</label>
-					<input
-						disabled={loading}
-						type="text"
-						placeholder="lnbc..."
-						bind:value={lookupInvoice}
-						required
-					/>
-					<Button {loading} on:click={() => getSatogramStatus(lookupInvoice)} type="submit"
-						>Lookup</Button
-					>
-				</form>
-			</section>
-			{#if satogramStatus}
-				{JSON.stringify(satogramStatus)}
+			{#if toWhom}
+				<div class="flex flex-col md:flex-row justify-between md:justify-around w-full">
+					<div class="flex justify-between md:block">
+						<strong> Total Count: </strong>
+						<span>{toWhom.total_count}</span>
+					</div>
+					<div class="flex justify-between md:block">
+						<strong> Total Count Pubkeys: </strong>
+						<span>{toWhom.total_count_pubkeys}</span>
+					</div>
+					<div class="flex flex-col gap-2">
+						<div class="flex justify-between md:block">
+							<strong> Total Count Wallet of Satoshi Addresses: </strong>
+							<span>{toWhom.total_count_wos_addresses}</span>
+						</div>
+						<span>WoS takes a 30% fee, and 10 sat minimum to show a Satogram. (10 sat Satogram yields WoS user 7 sats).</span>
+					</div>
+
+				</div>
+			{:else if loading}
+				<Spinner />
 			{/if}
-			<strong>OR</strong>
-			<p>Create a new satogram</p>
+			<p>Create a Satogram</p>
 			<form class="flex flex-col w-1/2 justify-center">
-				<label for="totalAmount">Total Cost (sats) Recommendation to reach all pubkeys: ~7500 sats</label>
+				<label for="totalAmount"
+					>Total Cost (sats) (recommendation to reach all pubkeys & WoS addresses: ~70,000 sats)</label
+				>
 				<input
 					type="number"
 					min="1"
 					max="250000"
-					placeholder="Total cost (amount you will pay)"
+					placeholder="Total cost (amount you will be invoiced)"
 					name="totalAmount"
 					required
 					bind:value={totalAmount}
@@ -227,14 +244,14 @@
 					type="number"
 					min="1"
 					max="10000"
-					placeholder="Don't pay fees above this amount"
+					placeholder="Max network fee to pay per Satogram"
 					name="maxFees"
 					bind:value={maxFees}
 				/>
 				<label for="message">Message</label>
 				<input
 					type="text"
-					placeholder="What do you want your satogram to say?"
+					placeholder="What do you want your Satogram to say?"
 					name="message"
 					maxlength="800"
 					required
@@ -242,10 +259,49 @@
 				/>
 				<Button {loading} on:click={createSatogram} type="submit">Create Satogram</Button>
 			</form>
+			<strong>OR</strong>
+			<h3 class="text-xl font-bold">Check Satogram Status</h3>
+			<form class="flex flex-col justify-center w-full md:w-1/2">
+				<label for="lookup">Enter your previous payment request to lookup the invoice</label>
+				<input
+					disabled={loading}
+					type="text"
+					placeholder="lnbc..."
+					bind:value={lookupInvoice}
+					required
+				/>
+				<Button {loading} on:click={() => getSatogramStatus(lookupInvoice)} type="submit"
+					>Lookup</Button
+				>
+			</form>
+			{#if satogramStatus}
+				<div
+					class="w-full border border-gray-500 bg-gray-200 p-2 rounded-lg dark:bg-gray-500 dark:border-white"
+				>
+					<pre class="break-all overflow-auto">{JSON.stringify(satogramStatus, null, 2)}</pre>
+				</div>
+			{/if}
 		{/if}
-		<div>
+		<div class="w-full">
 			<Accordion items={accordionItems} />
 		</div>
+	</section>
+	<section class="flex flex-col gap-4">
+		<p>Problems? Rug pulled? Comments?</p>
+
+		<p>
+			Contact "customer support" by reaching out to <strong>@BitcoinCoderBob</strong> on X, Nostr, or
+			Telegram.
+		</p>
+
+		<p>Is it really spam if I'm paying you?</p>
+
+		<p>
+			This code is all open source on <a
+				class="underline"
+				href="https://github.com/Satograms/Satogram">Github</a
+			>
+		</p>
 	</section>
 </div>
 

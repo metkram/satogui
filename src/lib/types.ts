@@ -14,8 +14,8 @@ export enum PaymentStatus {
 
 // GET /api/v1/towhom
 export type ToWhomResponse = {
-	pubkeys: string[];
-	wos_addresses: string[];
+	total_count_pubkeys: number;
+	total_count_wos_addresses: number;
 	total_count: number;
 };
 
