@@ -157,7 +157,7 @@
 		</div>
 	</section>
 	<section>
-		<h2 class="text-4xl text-center md:text-left">Send messages to the whole lightning network!</h2>
+		<h2 class="text-4xl text-center md:text-left">Send messages to (most of) the lightning network!</h2>
 	</section>
 	<section>
 		{#if error}
@@ -169,7 +169,7 @@
 	<section class="flex flex-col gap-4 items-center">
 		{#if paid}
 			<Alert mood={Mood.good} title="Success" closed={!paid} {close}>
-				Your satogram has been sent!
+				Your Satogram has been sent!
 			</Alert>
 		{:else if !error && invoice}
 			<div>
@@ -204,25 +204,28 @@
 						<strong> Total Count Pubkeys: </strong>
 						<span>{toWhom.total_count_pubkeys}</span>
 					</div>
-					<div class="flex justify-between md:block">
-						<strong> Total Count WOS Addresses: </strong>
-						<span>{toWhom.total_count_wos_addresses}</span>
+					<div class="flex flex-col gap-2">
+						<div class="flex justify-between md:block">
+							<strong> Total Count Wallet of Satoshi Addresses: </strong>
+							<span>{toWhom.total_count_wos_addresses}</span>
+						</div>
+						<span>WoS takes a 30% fee, and 10 sat minimum to show a Satogram. (10 sat Satogram yields WoS user 7 sats).</span>
 					</div>
+
 				</div>
 			{:else if loading}
 				<Spinner />
 			{/if}
-			<strong>OR</strong>
-			<p>Create a new satogram</p>
+			<p>Create a Satogram</p>
 			<form class="flex flex-col w-1/2 justify-center">
 				<label for="totalAmount"
-					>Total Cost (sats) Recommendation to reach all pubkeys: ~7500 sats</label
+					>Total Cost (sats) (recommendation to reach all pubkeys & WoS addresses: ~70,000 sats)</label
 				>
 				<input
 					type="number"
 					min="1"
 					max="250000"
-					placeholder="Total cost (amount you will pay)"
+					placeholder="Total cost (amount you will be invoiced)"
 					name="totalAmount"
 					required
 					bind:value={totalAmount}
@@ -241,14 +244,14 @@
 					type="number"
 					min="1"
 					max="10000"
-					placeholder="Don't pay fees above this amount"
+					placeholder="Max network fee to pay per Satogram"
 					name="maxFees"
 					bind:value={maxFees}
 				/>
 				<label for="message">Message</label>
 				<input
 					type="text"
-					placeholder="What do you want your satogram to say?"
+					placeholder="What do you want your Satogram to say?"
 					name="message"
 					maxlength="800"
 					required
