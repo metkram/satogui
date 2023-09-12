@@ -57,7 +57,7 @@
 	let message: string | null;
 
 	$: console.log({ $theme });
-	$: paid && browser && confetti.addConfetti({ emojis: ['💌'] });
+	$: paid && browser && confetti.addConfetti({ emojis: ['📨'] });
 
 	async function getSatogramStatus(paymentRequest: string) {
 		if (!paymentRequest) {
@@ -212,9 +212,12 @@
 			{:else if loading}
 				<Spinner />
 			{/if}
-			<form class="flex flex-col md:w-1/2 w-full justify-center">
-				<h3 class="text-xl font-bold">Create a new satogram</h3>
-				<label for="totalAmount">Total Cost (sats)</label>
+			<strong>OR</strong>
+			<p>Create a new satogram</p>
+			<form class="flex flex-col w-1/2 justify-center">
+				<label for="totalAmount"
+					>Total Cost (sats) Recommendation to reach all pubkeys: ~7500 sats</label
+				>
 				<input
 					type="number"
 					min="1"
