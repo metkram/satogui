@@ -209,9 +209,7 @@
 							<strong> Total Count Wallet of Satoshi Addresses: </strong>
 							<span>{toWhom.total_count_wos_addresses}</span>
 						</div>
-						<span
-							>WoS takes a 30% fee, and 10 sat minimum to show a Satogram. (10 sat Satogram yields WoS user 7 sats).</span
-						>
+						<span>WoS takes a 30% fee, and 10 sat minimum to show a Satogram. (10 sat Satogram yields WoS user 7 sats).</span>
 					</div>
 
 				</div>
