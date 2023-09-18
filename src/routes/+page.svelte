@@ -287,7 +287,15 @@
 		<p>Problems? Rug pulled? Comments?</p>
 
 		<p>
-			Contact "customer support" by reaching out to <strong>@BitcoinCoderBob</strong> or <strong>@Satograms</strong> on X, Nostr, or Telegram.
+			Contact "customer support" by reaching out to 
+			<strong><a
+				href="https://twitter.com/BitcoinCoderBob">@BitcoinCoderBob
+				</a>
+			</strong> or 
+			<strong><a
+				href="https://twitter.com/Satograms">@Satograms
+				</a>
+			</strong> on X, Nostr, or Telegram.
 		</p>
 
 		<p>Is it really spam if I'm paying you?</p>
