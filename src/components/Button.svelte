@@ -15,6 +15,6 @@
 
 <style lang="postcss">
 	button {
-		@apply p-4 mt-4 bg-[#e71921] text-white rounded hover:bg-red-700 transition-all;
+		@apply p-4 mt-4 bg-[#ee3124] text-white rounded hover:bg-red-700 transition-all;
 	}
 </style>
