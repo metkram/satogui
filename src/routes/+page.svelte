@@ -204,12 +204,9 @@
 						<strong> Total Count Pubkeys: </strong>
 						<span>{toWhom.total_count_pubkeys}</span>
 					</div>
-					<div class="flex flex-col gap-2">
-						<div class="flex justify-between md:block">
-							<strong> Total Count Wallet of Satoshi Addresses: </strong>
-							<span>{toWhom.total_count_wos_addresses}</span>
-						</div>
-						<span>WoS takes a 30% fee, and 10 sat minimum to show a Satogram. (10 sat Satogram yields WoS user 7 sats).</span>
+					<div class="flex justify-between md:block">
+						<strong> Total Count Wallet of Satoshi Addresses: </strong>
+						<span>{toWhom.total_count_wos_addresses}</span>
 					</div>
 
 				</div>
@@ -219,7 +216,7 @@
 			<p>Create a Satogram</p>
 			<form class="flex flex-col w-1/2 justify-center">
 				<label for="totalAmount"
-					>Total Cost (sats) (recommendation to reach all pubkeys & WoS addresses: ~70,000 sats)</label
+					>Total Cost (sats) (recommendation to reach all pubkeys & WoS addresses: ~85,000 sats) WoS takes a 30% fee, and 10 sat minimum to show a Satogram. (10 sat Satogram yields WoS user 7 sats).</label
 				>
 				<input
 					type="number"
@@ -290,17 +287,17 @@
 		<p>Problems? Rug pulled? Comments?</p>
 
 		<p>
-			Contact "customer support" by reaching out to <strong>@BitcoinCoderBob</strong> on X, Nostr, or
-			Telegram.
+			Contact "customer support" by reaching out to <strong>@BitcoinCoderBob</strong> or <strong>@Satograms</strong> on X, Nostr, or Telegram.
 		</p>
 
 		<p>Is it really spam if I'm paying you?</p>
 
 		<p>
-			This code is all open source on <a
+			This frontend is open source at <a
 				class="underline"
-				href="https://github.com/Satograms/Satogram">Github</a
+				href="https://github.com/Satograms">Github</a
 			>
+			Backend code to integrate Satograms into your platform coming soonTM
 		</p>
 	</section>
 </div>
