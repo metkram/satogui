@@ -297,7 +297,7 @@
 				class="underline"
 				href="https://github.com/Satograms">Github</a
 			>
-			Backend code to integrate Satograms into your platform coming soonTM
+			and the backend code to integrate Satograms into your platform coming soonTM
 		</p>
 	</section>
 </div>
