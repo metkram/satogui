@@ -264,7 +264,7 @@
 				<label for="senderAddress">Your pubkey or Wallet of Satoshi lightning address</label>
 				<input
 					type="text"
-					placeholder="blah-blah-blah@walletofsatoshi.com or 0309bf5f....cd8db7"
+					placeholder="0309bf5f....cd8db7 or blah-blah-blah@walletofsatoshi.com"
 					name="senderAddress"
 					maxlength="66"
 					bind:value={senderAddress}
