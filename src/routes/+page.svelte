@@ -256,11 +256,11 @@
 			{/if}
 			<form class="flex flex-col w-1/4 justify-center">
 				<label for="addMeAddress" style="text-align: center;"
-							>Want Satograms? Share your pubkey or Wallet or Satoshi address</label
+							>Want Satograms? Share your pubkey or Wallet of Satoshi address</label
 						>
 						<input
 							type="text"
-							placeholder="0309bf5f....cd8db7 or blah-blah-blah@walletofsatoshi.com"
+							placeholder="030f...cdb7 or blah@walletofsatoshi.com"
 							name="addMeAddress"
 							maxlength="66"
 							required
