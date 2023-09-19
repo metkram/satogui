@@ -223,13 +223,14 @@
 			<p>Create a Satogram</p>
 			<form class="flex flex-col w-1/2 justify-center">
 				<label for="totalAmount"
-					>Total Cost (sats) (recommendation to reach all pubkeys & WoS addresses: ~85,000 sats) WoS takes a 30% fee, and 10 sat minimum to show a Satogram. (10 sat Satogram yields WoS user 7 sats).</label
+					>Total Cost (sats) (recommendation to reach all: ~85,000 sats) WoS takes a 30% fee, and 10 sat minimum to show a Satogram. (10 sat Satogram yields WoS user 7 sats).</label
 				>
 				<input
 					type="number"
+					style="margin-bottom: 7px;"
 					min="1"
 					max="250000"
-					placeholder="Total cost (amount you will be invoiced)"
+					placeholder="Amount sats you will be invoiced"
 					name="totalAmount"
 					required
 					bind:value={totalAmount}
@@ -237,24 +238,27 @@
 				<label for="amount">Amount Per Satogram</label>
 				<input
 					type="number"
+					style="margin-bottom: 7px;"
 					min="1"
 					max="10000"
-					placeholder="Enter amount to send each node"
+					placeholder="Amount to send to each node/address"
 					name="amountPerSatogram"
 					bind:value={amountPerSatogram}
 				/>
-				<label for="maxFees">Max Fees (recommendation:)</label>
+				<label for="maxFees">Max Fees (recommendation: 20)</label>
 				<input
 					type="number"
+					style="margin-bottom: 7px;"
 					min="1"
 					max="10000"
-					placeholder="Max network fee to pay per Satogram"
+					placeholder="Max network fee per Satogram"
 					name="maxFees"
 					bind:value={maxFees}
 				/>
 				<label for="message">Message</label>
 				<input
 					type="text"
+					style="margin-bottom: 7px; height: 50px"
 					placeholder="What do you want your Satogram to say?"
 					name="message"
 					maxlength="800"
