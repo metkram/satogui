@@ -225,8 +225,8 @@
 				<div class="w-1/5">
 					<p>Wallet of Satoshi takes a 30% fee, and 10 sat minimum to show a Satogram. (10 sat Satogram yields WoS user 7 sats)</p>
 				</div>
-				<div class="flex flex-col w-1/2 justify-center">
-					<form >
+				<div class="w-1/2">
+					<form class="flex flex-col justify-center">
 						<label for="totalAmount"
 							><b>Total Cost (sats)</b> (recommendation to reach all: ~85,000 sats) </label
 						>
