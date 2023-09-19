@@ -54,3 +54,9 @@ export type SatogramDetailsPayload = {
 	start_process_time: string;
 	end_process_time: string;
 };
+
+// POST /api/v1/addme
+export type AddMeResponse = {
+ added: boolean;
+ existed: boolean;
+};
