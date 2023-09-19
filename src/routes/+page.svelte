@@ -229,7 +229,7 @@
 						<span>{totalAmount}</span>
 					</li>
 					<li>
-						<strong>Your pubkey or Wallet of Satoshi lightning address: </strong>
+						<strong>Your node pubkey or Wallet of Satoshi lightning address: </strong>
 						<span>{senderAddress}</span>
 					</li>
 				</ul>
@@ -242,7 +242,7 @@
 						<span>{toWhom.total_count}</span>
 					</div>
 					<div class="flex justify-between md:block">
-						<strong> Total Pubkeys: </strong>
+						<strong> Total Nodes: </strong>
 						<span>{toWhom.total_count_pubkeys}</span>
 					</div>
 					<div class="flex justify-between md:block">
