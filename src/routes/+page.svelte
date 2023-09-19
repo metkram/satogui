@@ -222,8 +222,8 @@
 			{/if}
 			<p><b>Create a Satogram</b></p>
 			<div class="flex">
-				<div class="w-1/5">
-					<p>Wallet of Satoshi takes a 30% fee, and 10 sat minimum to show a Satogram. (10 sat Satogram yields WoS user 7 sats)</p>
+				<div class="w-1/4">
+					<p class="text-center justify-center">Wallet of Satoshi takes a 30% fee, and 10 sat minimum to show a Satogram. (10 sat Satogram yields WoS user 7 sats)</p>
 				</div>
 				<div class="w-1/2">
 					<form class="flex flex-col justify-center">
