@@ -25,6 +25,7 @@ export type SatogramPayload = {
 	amt_per_satogram?: number;
 	max_fees?: number;
 	message: string;
+	sender_address?: string;
 };
 
 export type SatogramResponse = {

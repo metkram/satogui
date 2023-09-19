@@ -55,6 +55,7 @@
 	let amountPerSatogram: number | null;
 	let maxFees: number | null;
 	let message: string | null;
+	let senderAddress: string | null;
 
 	$: console.log({ $theme });
 	$: paid && browser && confetti.addConfetti({ emojis: ['📨'] });
@@ -113,7 +114,8 @@
 					total_cost: totalAmount,
 					amt_per_satogram: amountPerSatogram,
 					max_fees: maxFees,
-					message
+					message,
+					sender_address: senderAddress
 				})
 			});
 			invoice = (await result.json()).payment_request;
@@ -134,6 +136,7 @@
 		amountPerSatogram = null;
 		maxFees = null;
 		message = null;
+		senderAddress = null;
 	}
 
 	function handlePaid() {
@@ -191,21 +194,25 @@
 						<strong>Total Cost: </strong>
 						<span>{totalAmount}</span>
 					</li>
+					<li>
+						<strong>Your pubkey or Wallet of Satoshi lightning address: </strong>
+						<span>{senderAddress}</span>
+					</li>
 				</ul>
 			</div>
 		{:else}
 			{#if toWhom}
 				<div class="flex flex-col md:flex-row justify-between md:justify-around w-full">
 					<div class="flex justify-between md:block">
-						<strong> Total Count: </strong>
+						<strong> Total Nodes and Addresses: </strong>
 						<span>{toWhom.total_count}</span>
 					</div>
 					<div class="flex justify-between md:block">
-						<strong> Total Count Pubkeys: </strong>
+						<strong> Total Pubkeys: </strong>
 						<span>{toWhom.total_count_pubkeys}</span>
 					</div>
 					<div class="flex justify-between md:block">
-						<strong> Total Count Wallet of Satoshi Addresses: </strong>
+						<strong> Total Wallet of Satoshi Addresses: </strong>
 						<span>{toWhom.total_count_wos_addresses}</span>
 					</div>
 
@@ -236,7 +243,7 @@
 					name="amountPerSatogram"
 					bind:value={amountPerSatogram}
 				/>
-				<label for="fees">Max Fees</label>
+				<label for="maxFees">Max Fees (recommendation:)</label>
 				<input
 					type="number"
 					min="1"
@@ -253,6 +260,14 @@
 					maxlength="800"
 					required
 					bind:value={message}
+				/>
+				<label for="senderAddress">Your pubkey or Wallet of Satoshi lightning address</label>
+				<input
+					type="text"
+					placeholder="0309bf5f....cd8db7 or blah-blah-blah@walletofsatoshi.com"
+					name="senderAddress"
+					maxlength="66"
+					bind:value={senderAddress}
 				/>
 				<Button {loading} on:click={createSatogram} type="submit">Create Satogram</Button>
 			</form>
