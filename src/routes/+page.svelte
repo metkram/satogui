@@ -30,6 +30,11 @@
 				'Whether you are a brand who wants to advertise your product, or a pleb who wants to wish the network a good morning, Satograms allow you to put your messaging directly in front of users. Folks are a lot more receptive to "spam" messaging if they are getting paid for it.'
 		},
 		{
+			title: 'Wallet of Satoshi fees',
+			content:
+				`Wallet of Satoshi takes a 30% fee, and 10 sat minimum to show a Satogram. Example: 10 sat Satogram yields Wallet of Satoshi user 7 sats. If you set the satogram amount to less than 10 sats, 10 sats will be autmatically used for each Satogram sent to Wallet of Satoshi, but your set value will be used when sending to node pubkeys`
+		},
+		{
 			title: 'Future',
 			content:
 				'Currently Wallet of Saotshi is the first custodial wallet provider to offer their users support for Satograms. If you want to integrate Satogram support for your users, checkout our README in our github. Adding Satogram support is low effort and could be adopted by more custodial providers in the future (Strike? Cash App?). We will continue to grow our list of pubkeys and lightning addresses that we Satogram to, and if you have not received one reach out to us!'
@@ -160,7 +165,7 @@
 		</div>
 	</section>
 	<section>
-		<h2 class="text-4xl text-center">Send messages to (most of) the lightning network!</h2>
+		<h2 class="text-4xl text-center md:text-left">Send messages to (most of) the lightning network!</h2>
 	</section>
 	<section>
 		{#if error}
@@ -221,12 +226,7 @@
 				<Spinner />
 			{/if}
 			<p><b>Create a Satogram</b></p>
-			<div class="flex">
-				<div class="w-1/4">
-					<p class="text-center justify-center">Wallet of Satoshi takes a 30% fee, and 10 sat minimum to show a Satogram. (10 sat Satogram yields WoS user 7 sats)</p>
-				</div>
-				<div class="w-1/2">
-					<form class="flex flex-col justify-center">
+					<form class="flex flex-col w-1/2 justify-center">
 						<label for="totalAmount"
 							><b>Total Cost (sats)</b> (recommendation to reach all: ~85,000 sats) </label
 						>
@@ -240,7 +240,7 @@
 							required
 							bind:value={totalAmount}
 						/>
-						<label for="amount"><b>Amount Per Satogram</b></label>
+						<label for="amount"><b>Amount Per Satogram</b>(min 10 for Wallet of Satoshi,)</label>
 						<input
 							type="number"
 							style="margin-bottom: 15px;"
@@ -280,8 +280,6 @@
 						/>
 						<Button {loading} on:click={createSatogram} type="submit">Create Satogram</Button>
 					</form>
-				</div>
-			</div>
 			<strong>OR</strong>
 			<h3 class="text-xl font-bold">Check Satogram Status</h3>
 			<form class="flex flex-col justify-center w-full md:w-1/2">
