@@ -227,7 +227,7 @@
 				>
 				<input
 					type="number"
-					style="margin-bottom: 7px;"
+					style="margin-bottom: 15px;"
 					min="1"
 					max="250000"
 					placeholder="Amount sats you will be invoiced"
@@ -238,7 +238,7 @@
 				<label for="amount">Amount Per Satogram</label>
 				<input
 					type="number"
-					style="margin-bottom: 7px;"
+					style="margin-bottom: 15px;"
 					min="1"
 					max="10000"
 					placeholder="Amount to send to each node/address"
@@ -248,7 +248,7 @@
 				<label for="maxFees">Max Fees (recommendation: 20)</label>
 				<input
 					type="number"
-					style="margin-bottom: 7px;"
+					style="margin-bottom: 15px;"
 					min="1"
 					max="10000"
 					placeholder="Max network fee per Satogram"
@@ -258,7 +258,7 @@
 				<label for="message">Message</label>
 				<input
 					type="text"
-					style="margin-bottom: 7px; height: 50px"
+					style="margin-bottom: 15px; height: 150px"
 					placeholder="What do you want your Satogram to say?"
 					name="message"
 					maxlength="800"
