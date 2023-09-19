@@ -160,7 +160,7 @@
 		</div>
 	</section>
 	<section>
-		<h2 class="text-4xl text-center md:text-left">Send messages to (most of) the lightning network!</h2>
+		<h2 class="text-4xl text-center">Send messages to (most of) the lightning network!</h2>
 	</section>
 	<section>
 		{#if error}
@@ -220,61 +220,68 @@
 			{:else if loading}
 				<Spinner />
 			{/if}
-			<p>Create a Satogram</p>
-			<form class="flex flex-col w-1/2 justify-center">
-				<label for="totalAmount"
-					>Total Cost (sats) (recommendation to reach all: ~85,000 sats) WoS takes a 30% fee, and 10 sat minimum to show a Satogram. (10 sat Satogram yields WoS user 7 sats).</label
-				>
-				<input
-					type="number"
-					style="margin-bottom: 15px;"
-					min="1"
-					max="250000"
-					placeholder="Amount sats you will be invoiced"
-					name="totalAmount"
-					required
-					bind:value={totalAmount}
-				/>
-				<label for="amount">Amount Per Satogram</label>
-				<input
-					type="number"
-					style="margin-bottom: 15px;"
-					min="1"
-					max="10000"
-					placeholder="Amount to send to each node/address"
-					name="amountPerSatogram"
-					bind:value={amountPerSatogram}
-				/>
-				<label for="maxFees">Max Fees (recommendation: 20)</label>
-				<input
-					type="number"
-					style="margin-bottom: 15px;"
-					min="1"
-					max="10000"
-					placeholder="Max network fee per Satogram"
-					name="maxFees"
-					bind:value={maxFees}
-				/>
-				<label for="message">Message</label>
-				<input
-					type="text"
-					style="margin-bottom: 15px; height: 150px"
-					placeholder="What do you want your Satogram to say?"
-					name="message"
-					maxlength="800"
-					required
-					bind:value={message}
-				/>
-				<label for="senderAddress">Your pubkey or Wallet of Satoshi lightning address</label>
-				<input
-					type="text"
-					placeholder="0309bf5f....cd8db7 or blah-blah-blah@walletofsatoshi.com"
-					name="senderAddress"
-					maxlength="66"
-					bind:value={senderAddress}
-				/>
-				<Button {loading} on:click={createSatogram} type="submit">Create Satogram</Button>
-			</form>
+			<p><b>Create a Satogram</b></p>
+			<div class="flex">
+				<div class="w-1/2">
+					<p>Wallet of Satoshi takes a 30% fee, and 10 sat minimum to show a Satogram. (10 sat Satogram yields WoS user 7 sats).</p>
+				</div>
+				<div class="w-1/2">
+					<form class="flex flex-col w-1/2 justify-center">
+						<label for="totalAmount"
+							><b>Total Cost (sats)</b> (recommendation to reach all: ~85,000 sats) </label
+						>
+						<input
+							type="number"
+							style="margin-bottom: 15px;"
+							min="500"
+							max="250000"
+							placeholder="Amount sats you will be invoiced"
+							name="totalAmount"
+							required
+							bind:value={totalAmount}
+						/>
+						<label for="amount"><b>Amount Per Satogram</b></label>
+						<input
+							type="number"
+							style="margin-bottom: 15px;"
+							min="1"
+							max="10000"
+							placeholder="Amount to send to each node/address"
+							name="amountPerSatogram"
+							bind:value={amountPerSatogram}
+						/>
+						<label for="maxFees"><b>Max Fees (sats)</b> (recommendation: 20 sats)</label>
+						<input
+							type="number"
+							style="margin-bottom: 15px;"
+							min="1"
+							max="10000"
+							placeholder="Max network fee per Satogram"
+							name="maxFees"
+							bind:value={maxFees}
+						/>
+						<label for="message"><b>Message</b></label>
+						<input
+							type="text"
+							style="margin-bottom: 15px; height: 150px"
+							placeholder="What do you want your Satogram to say?"
+							name="message"
+							maxlength="800"
+							required
+							bind:value={message}
+						/>
+						<label for="senderAddress"><b>Your pubkey or Wallet of Satoshi lightning address</b></label>
+						<input
+							type="text"
+							placeholder="0309bf5f....cd8db7 or blah-blah-blah@walletofsatoshi.com"
+							name="senderAddress"
+							maxlength="66"
+							bind:value={senderAddress}
+						/>
+						<Button {loading} on:click={createSatogram} type="submit">Create Satogram</Button>
+					</form>
+				</div>
+			</div>
 			<strong>OR</strong>
 			<h3 class="text-xl font-bold">Check Satogram Status</h3>
 			<form class="flex flex-col justify-center w-full md:w-1/2">
