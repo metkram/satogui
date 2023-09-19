@@ -12,6 +12,7 @@
 	import { browser } from '$app/environment';
 	import { PUBLIC_API_ENDPOINT } from '$env/static/public';
 	import Spinner from '$components/Spinner.svelte';
+	import { AddMeResponse } from '../lib/types';
 
 	let accordionItems: AccordionItem[] = [
 		{
@@ -30,9 +31,14 @@
 				'Whether you are a brand who wants to advertise your product, or a pleb who wants to wish the network a good morning, Satograms allow you to put your messaging directly in front of users. Folks are a lot more receptive to "spam" messaging if they are getting paid for it.'
 		},
 		{
+			title: 'Wallet of Satoshi fees',
+			content:
+				`Wallet of Satoshi takes a 30% fee, and 10 sat minimum to show a Satogram. Example: 10 sat Satogram yields Wallet of Satoshi user 7 sats. If you set the satogram amount to less than 10 sats, 10 sats will be autmatically used for each Satogram sent to Wallet of Satoshi, but your set value will be used when sending to node pubkeys.`
+		},
+		{
 			title: 'Future',
 			content:
-				'Currently Wallet of Saotshi is the first custodial wallet provider to offer their users support for Satograms. If you want to integrate Satogram support for your users, checkout our README in our github. Adding Satogram support is low effort and could be adopted by more custodial providers in the future (Strike? Cash App?). We will continue to grow our list of pubkeys and lightning addresses that we Satogram to, and if you have not received one reach out to us!'
+				'Currently Wallet of Saotshi is the first custodial wallet provider to offer their users support for Satograms. Adding Satogram support is low effort and could be adopted by more custodial providers in the future (Strike? Cash App?). We will continue to grow our list of pubkeys and lightning addresses that we Satogram to, and if you have not received one reach out to us!'
 		},
 		{
 			title: 'How much does this cost? How many people will receive my Satograms?',
@@ -56,6 +62,9 @@
 	let maxFees: number | null;
 	let message: string | null;
 	let senderAddress: string | null;
+	let addMeAddress: string | null;
+
+	let addMeResponse: AddMeResponse;
 
 	$: console.log({ $theme });
 	$: paid && browser && confetti.addConfetti({ emojis: ['📨'] });
@@ -119,6 +128,31 @@
 				})
 			});
 			invoice = (await result.json()).payment_request;
+		} catch (e) {
+			console.error(e);
+			error = e as Error;
+			loading = false;
+		} finally {
+			loading = false;
+		}
+	}
+
+	async function addMe() {
+		if (!addMeAddress) {
+			return;
+		}
+		try {
+			loading = true;
+			const result = await fetch(`${PUBLIC_API_ENDPOINT}/api/v1/addme`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					add_me_address: addMeAddress
+				})
+			});
+			addMeResponse = await result.json();
 		} catch (e) {
 			console.error(e);
 			error = e as Error;
@@ -220,57 +254,83 @@
 			{:else if loading}
 				<Spinner />
 			{/if}
-			<p>Create a Satogram</p>
-			<form class="flex flex-col w-1/2 justify-center">
-				<label for="totalAmount"
-					>Total Cost (sats) (recommendation to reach all pubkeys & WoS addresses: ~85,000 sats) WoS takes a 30% fee, and 10 sat minimum to show a Satogram. (10 sat Satogram yields WoS user 7 sats).</label
-				>
-				<input
-					type="number"
-					min="1"
-					max="250000"
-					placeholder="Total cost (amount you will be invoiced)"
-					name="totalAmount"
-					required
-					bind:value={totalAmount}
-				/>
-				<label for="amount">Amount Per Satogram</label>
-				<input
-					type="number"
-					min="1"
-					max="10000"
-					placeholder="Enter amount to send each node"
-					name="amountPerSatogram"
-					bind:value={amountPerSatogram}
-				/>
-				<label for="maxFees">Max Fees (recommendation:)</label>
-				<input
-					type="number"
-					min="1"
-					max="10000"
-					placeholder="Max network fee to pay per Satogram"
-					name="maxFees"
-					bind:value={maxFees}
-				/>
-				<label for="message">Message</label>
-				<input
-					type="text"
-					placeholder="What do you want your Satogram to say?"
-					name="message"
-					maxlength="800"
-					required
-					bind:value={message}
-				/>
-				<label for="senderAddress">Your pubkey or Wallet of Satoshi lightning address</label>
-				<input
-					type="text"
-					placeholder="0309bf5f....cd8db7 or blah-blah-blah@walletofsatoshi.com"
-					name="senderAddress"
-					maxlength="66"
-					bind:value={senderAddress}
-				/>
-				<Button {loading} on:click={createSatogram} type="submit">Create Satogram</Button>
+			<form class="flex flex-col w-1/4 justify-center">
+				<label for="addMeAddress" style="text-align: center;"
+							>Want Satograms? Share your pubkey or Wallet or Satoshi address</label
+						>
+						<input
+							type="text"
+							placeholder="0309bf5f....cd8db7 or blah-blah-blah@walletofsatoshi.com"
+							name="addMeAddress"
+							maxlength="66"
+							required
+							bind:value={addMeAddress}
+						/>
+						<Button {loading} on:click={addMe} type="submit">Add me to the Satogram send list!</Button>
+
 			</form>
+			{#if addMeResponse}
+				<div
+					class="w-full border border-gray-500 bg-gray-200 p-2 rounded-lg dark:bg-gray-500 dark:border-white"
+				>
+					<pre class="break-all overflow-auto">{JSON.stringify(addMeResponse, null, 2)}</pre>
+				</div>
+			{/if}
+			<p><b>Create a Satogram</b></p>
+					<form class="flex flex-col w-1/2 justify-center">
+						<label for="totalAmount"
+							><b>Total Cost (sats)</b> (recommendation to reach all: ~85,000 sats) </label
+						>
+						<input
+							type="number"
+							style="margin-bottom: 15px;"
+							min="500"
+							max="250000"
+							placeholder="Amount sats you will be invoiced"
+							name="totalAmount"
+							required
+							bind:value={totalAmount}
+						/>
+						<label for="amount"><b>Amount Per Satogram</b>(min 10 for Wallet of Satoshi,)</label>
+						<input
+							type="number"
+							style="margin-bottom: 15px;"
+							min="1"
+							max="10000"
+							placeholder="Amount to send to each node/address"
+							name="amountPerSatogram"
+							bind:value={amountPerSatogram}
+						/>
+						<label for="maxFees"><b>Max Fees (sats)</b> (recommendation: 20 sats)</label>
+						<input
+							type="number"
+							style="margin-bottom: 15px;"
+							min="1"
+							max="10000"
+							placeholder="Max network fee per Satogram"
+							name="maxFees"
+							bind:value={maxFees}
+						/>
+						<label for="message"><b>Message</b></label>
+						<input
+							type="text"
+							style="margin-bottom: 15px; height: 150px"
+							placeholder="What do you want your Satogram to say?"
+							name="message"
+							maxlength="800"
+							required
+							bind:value={message}
+						/>
+						<label for="senderAddress"><b>Your pubkey or Wallet of Satoshi lightning address</b></label>
+						<input
+							type="text"
+							placeholder="0309bf5f....cd8db7 or blah-blah-blah@walletofsatoshi.com"
+							name="senderAddress"
+							maxlength="66"
+							bind:value={senderAddress}
+						/>
+						<Button {loading} on:click={createSatogram} type="submit">Create Satogram</Button>
+					</form>
 			<strong>OR</strong>
 			<h3 class="text-xl font-bold">Check Satogram Status</h3>
 			<form class="flex flex-col justify-center w-full md:w-1/2">
