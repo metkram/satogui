@@ -255,7 +255,7 @@
 				<Spinner />
 			{/if}
 			<form class="flex flex-col w-1/4 justify-center">
-				<label for="addMeAddress"
+				<label for="addMeAddress" style="text-align: center;"
 							>Want Satograms? Share your pubkey or Wallet or Satoshi address</label
 						>
 						<input
