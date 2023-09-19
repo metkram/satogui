@@ -242,12 +242,12 @@
 						<span class="text-2xl">{toWhom.total_count}</span>
 					</div>
 					<div class="flex justify-between md:block">
-						<strong class="text-2xl"> Total Nodes: </strong>
-						<span>{toWhom.total_count_pubkeys}</span>
+						<strong> Total Nodes: </strong>
+						<span class="text-2xl">{toWhom.total_count_pubkeys}</span>
 					</div>
 					<div class="flex justify-between md:block">
-						<strong class="text-2xl"> Total Wallet of Satoshi Addresses: </strong>
-						<span>{toWhom.total_count_wos_addresses}</span>
+						<strong> Total Wallet of Satoshi Addresses: </strong>
+						<span class="text-2xl">{toWhom.total_count_wos_addresses}</span>
 					</div>
 
 				</div>
