@@ -222,10 +222,10 @@
 			{/if}
 			<p><b>Create a Satogram</b></p>
 			<div class="flex">
-				<div class="w-1/2">
+				<div class="w-1/8">
 					<p>Wallet of Satoshi takes a 30% fee, and 10 sat minimum to show a Satogram. (10 sat Satogram yields WoS user 7 sats).</p>
 				</div>
-				<div class="w-1/2">
+				<div class="w-7/8">
 					<form class="flex flex-col w-1/2 justify-center">
 						<label for="totalAmount"
 							><b>Total Cost (sats)</b> (recommendation to reach all: ~85,000 sats) </label
