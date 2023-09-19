@@ -239,15 +239,15 @@
 				<div class="flex flex-col md:flex-row justify-between md:justify-around w-full">
 					<div class="flex justify-between md:block">
 						<strong> Total Nodes and Addresses: </strong>
-						<span class="text-2xl">{toWhom.total_count}</span>
+						<span>{toWhom.total_count}</span>
 					</div>
 					<div class="flex justify-between md:block">
 						<strong> Total Nodes: </strong>
-						<span class="text-2xl">{toWhom.total_count_pubkeys}</span>
+						<span>{toWhom.total_count_pubkeys}</span>
 					</div>
 					<div class="flex justify-between md:block">
 						<strong> Total Wallet of Satoshi Addresses: </strong>
-						<span class="text-2xl">{toWhom.total_count_wos_addresses}</span>
+						<span>{toWhom.total_count_wos_addresses}</span>
 					</div>
 
 				</div>
