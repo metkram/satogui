@@ -30,10 +30,25 @@
 			content:
 				'Whether you are a brand who wants to advertise your product, or a pleb who wants to wish the network a good morning, Satograms allow you to put your messaging directly in front of users. Folks are a lot more receptive to "spam" messaging if they are getting paid for it.'
 		},
+			{
+			title: 'Distribution between Wallet of Satoshi and nodes',
+			content:
+				`Currently the site does not allow for customizing the breakdown of Satograms between these two. Budget will be used to pay all Wallet of Satoshi addresses before sending to nodes. In other words, in order to semd a Satogram to the first node, all Wallet of Satoshi addresses need to be sent Satograms first. Thus the Total Cost field should be set accordingly. Customization of this breakdown is a feature coming soon.`
+		},
+		{
+			title: 'Network Fee Limit',
+			content:
+				`The Network Fee Limit field is used to set the max fees paid for a lightning transaction. Example: With the field set to 5, a payment that costs 6 or more sats in routing fees will not succeed. If the fee limit set exceeds the actual routing fees, then the fees spent will equal the routing fees. Example: With the field set to 10, a payment that costs 6 sats to route will pay 6 sats in routing fees. The higher the fee limit set, the more possible routes that can be taken to settle the payment, increasing payment success likelihood.`
+		},
 		{
 			title: 'Wallet of Satoshi fees',
 			content:
 				`Wallet of Satoshi takes a 30% fee, and 10 sat minimum to show a Satogram. Example: 10 sat Satogram yields Wallet of Satoshi user 7 sats. If you set the satogram amount to less than 10 sats, 10 sats will be autmatically used for each Satogram sent to Wallet of Satoshi, but your set value will be used when sending to node pubkeys.`
+		},
+			{
+			title: 'Refunds',
+			content:
+				`The Total Cost field currently comes with a best guess estimate for what it will cost to Satogram all Wallet of Satoshi addresses and nodes (~85,000 sats). However network fees are not known until the payment is sent, making a perfect estimate impossible. In the case of over payment a refund can be issues for the over payment amount by contacting us (see contact info below). Example: Total Cost set to 100k sats. Actual costs to send all Satograms: 85k sats. A refund can be requested for the 15k difference. In the future this process will be automated.	`
 		},
 		{
 			title: 'Future',
@@ -221,7 +236,7 @@
 						<span>{amountPerSatogram}</span>
 					</li>
 					<li>
-						<strong>Max Fees: </strong>
+						<strong>Network Fee Limit: </strong>
 						<span>{maxFees}</span>
 					</li>
 					<li>
@@ -256,7 +271,7 @@
 			{/if}
 			<form class="flex flex-col w-1/4 justify-center">
 				<label for="addMeAddress" style="text-align: center;"
-							>Want Satograms? Share your pubkey or Wallet of Satoshi address</label
+							>Want Satograms? Share your node pubkey or Wallet of Satoshi address</label
 						>
 						<input
 							type="text"
@@ -291,7 +306,7 @@
 							required
 							bind:value={totalAmount}
 						/>
-						<label for="amount"><b>Amount Per Satogram</b>(min 10 for Wallet of Satoshi,)</label>
+						<label for="amount"><b>Amount Per Satogram</b></label>
 						<input
 							type="number"
 							style="margin-bottom: 15px;"
@@ -301,7 +316,7 @@
 							name="amountPerSatogram"
 							bind:value={amountPerSatogram}
 						/>
-						<label for="maxFees"><b>Max Fees (sats)</b> (recommendation: 20 sats)</label>
+						<label for="maxFees"><b>Network Fee Limit</b> ((sats) recommendation: 20)</label>
 						<input
 							type="number"
 							style="margin-bottom: 15px;"
@@ -311,7 +326,7 @@
 							name="maxFees"
 							bind:value={maxFees}
 						/>
-						<label for="message"><b>Message</b></label>
+						<label for="message"><b>Satogram Message</b></label>
 						<input
 							type="text"
 							style="margin-bottom: 15px; height: 150px"
@@ -321,7 +336,7 @@
 							required
 							bind:value={message}
 						/>
-						<label for="senderAddress"><b>Your pubkey or Wallet of Satoshi lightning address</b></label>
+						<label for="senderAddress"><b>Your node pubkey or Wallet of Satoshi lightning address</b></label>
 						<input
 							type="text"
 							placeholder="0309bf5f....cd8db7 or blah-blah-blah@walletofsatoshi.com"
