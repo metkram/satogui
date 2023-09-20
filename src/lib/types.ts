@@ -17,6 +17,7 @@ export type ToWhomResponse = {
 	total_count_pubkeys: number;
 	total_count_wos_addresses: number;
 	total_count: number;
+	total_satograms_sent: number;
 };
 
 // POST /api/v1/satogram
