@@ -264,7 +264,11 @@
 						<strong> Total Wallet of Satoshi Addresses: </strong>
 						<span>{toWhom.total_count_wos_addresses}</span>
 					</div>
-
+					<div class="flex justify-between md:block">
+						<strong> Total Satograms sent: </strong>
+						<span>{toWhom.total_satograms_sent}</span>
+					</div>
+					
 				</div>
 			{:else if loading}
 				<Spinner />
