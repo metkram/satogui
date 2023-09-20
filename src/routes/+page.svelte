@@ -209,7 +209,7 @@
 		</div>
 	</section>
 	<section>
-		<h2 class="text-4xl text-center md:text-left">Send messages to (most of) the lightning network!</h2>
+		<h2 class="text-4xl text-center md:text-left">Send your message to (most of) the lightning network!</h2>
 	</section>
 	<section>
 		{#if error}
@@ -306,7 +306,7 @@
 							required
 							bind:value={totalAmount}
 						/>
-						<label for="amount"><b>Amount Per Satogram</b></label>
+						<label for="amount"><b>Amount Per Satogram (sats)</b></label>
 						<input
 							type="number"
 							style="margin-bottom: 15px;"
@@ -316,7 +316,7 @@
 							name="amountPerSatogram"
 							bind:value={amountPerSatogram}
 						/>
-						<label for="maxFees"><b>Network Fee Limit</b> ((sats) recommendation: 20)</label>
+						<label for="maxFees"><b>Network Fee Limit</b> (sats) recommendation: 20</label>
 						<input
 							type="number"
 							style="margin-bottom: 15px;"
@@ -349,7 +349,7 @@
 			<strong>OR</strong>
 			<h3 class="text-xl font-bold">Check Satogram Status</h3>
 			<form class="flex flex-col justify-center w-full md:w-1/2">
-				<label for="lookup">Enter your previous payment request to lookup the invoice</label>
+				<label for="lookup">Enter your previous payment request to lookup the Satogram status</label>
 				<input
 					disabled={loading}
 					type="text"
@@ -374,7 +374,7 @@
 		</div>
 	</section>
 	<section class="flex flex-col gap-4">
-		<p>Problems? Rug pulled? Comments?</p>
+		<p>Problems? Rug pulled? Comments? Refund?</p>
 
 		<p>
 			Contact "customer support" by reaching out to 
