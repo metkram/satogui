@@ -294,7 +294,7 @@
 			<p><b>Create a Satogram</b></p>
 					<form class="flex flex-col w-1/2 justify-center">
 						<label for="totalAmount"
-							><b>Total Cost (sats)</b> (recommendation to reach all: ~85,000 sats) </label
+							><b>Total Cost</b> (sats) recommendation to reach all: ~85,000 sats </label
 						>
 						<input
 							type="number"
@@ -306,7 +306,7 @@
 							required
 							bind:value={totalAmount}
 						/>
-						<label for="amount"><b>Amount Per Satogram (sats)</b></label>
+						<label for="amount"><b>Amount Per Satogram</b> (sats)</label>
 						<input
 							type="number"
 							style="margin-bottom: 15px;"
@@ -316,7 +316,7 @@
 							name="amountPerSatogram"
 							bind:value={amountPerSatogram}
 						/>
-						<label for="maxFees"><b>Network Fee Limit</b> (sats) recommendation: 20</label>
+						<label for="maxFees"><b>Network Fee Limit</b> (sats) recommendation: 20 (optional)</label>
 						<input
 							type="number"
 							style="margin-bottom: 15px;"
@@ -336,7 +336,7 @@
 							required
 							bind:value={message}
 						/>
-						<label for="senderAddress"><b>Your node pubkey or Wallet of Satoshi lightning address</b></label>
+						<label for="senderAddress"><b>Your node pubkey or Wallet of Satoshi lightning address</b> (optional)</label>
 						<input
 							type="text"
 							placeholder="0309bf5f....cd8db7 or blah-blah-blah@walletofsatoshi.com"
