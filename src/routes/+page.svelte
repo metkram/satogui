@@ -33,7 +33,7 @@
 			{
 			title: 'Distribution between Wallet of Satoshi and nodes',
 			content:
-				`Currently the site does not allow for customizing the breakdown of Satograms between these two. Budget will be used to pay all Wallet of Satoshi addresses before sending to nodes. In other words, in order to semd a Satogram to the first node, all Wallet of Satoshi addresses need to be sent Satograms first. Thus the Total Cost field should be set accordingly. Customization of this breakdown is a feature coming soon.`
+				`Currently the site does not allow for customizing the breakdown of Satograms between these two. Budget will be used to pay all Wallet of Satoshi addresses before sending to nodes. In other words, in order to send a Satogram to the first node, all Wallet of Satoshi addresses need to be sent Satograms first. Thus the Total Cost field should be set accordingly. Customization of this breakdown is a feature coming soon.`
 		},
 		{
 			title: 'Network Fee Limit',
@@ -48,7 +48,7 @@
 			{
 			title: 'Refunds',
 			content:
-				`The Total Cost field currently comes with a best guess estimate for what it will cost to Satogram all Wallet of Satoshi addresses and nodes (~85,000 sats). However network fees are not known until the payment is sent, making a perfect estimate impossible. In the case of over payment a refund can be issues for the over payment amount by contacting us (see contact info below). Example: Total Cost set to 100k sats. Actual costs to send all Satograms: 85k sats. A refund can be requested for the 15k difference. In the future this process will be automated.	`
+				`The Total Cost field currently comes with a best guess estimate for what it will cost to Satogram all Wallet of Satoshi addresses and nodes (~100,000 sats). However network fees are not known until the payment is sent, making a perfect estimate impossible. In the case of over payment a refund can be issues for the over payment amount by contacting us (see contact info below). Example: Total Cost set to 100k sats. Actual costs to send all Satograms: 85k sats. A refund can be requested for the 15k difference. In the future this process will be automated.	`
 		},
 		{
 			title: 'Future',
