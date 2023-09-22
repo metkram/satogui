@@ -21,6 +21,11 @@
 				'Satograms are lightning keysend payments that include a custom message. Think of it like spam email, but you get paid for it. When you receive a Satogram you have been paid by the sender! Reach out to thousands of people with your own custom message of up to ~1000 characters in only a few minutes.'
 		},
 		{
+			title: 'How much does it cost',
+			content:
+				`At 1 sat/Satogram, about 85k sats (Wallet of Satoshi has a 10 sat minimum, so about ~60k sats is what it costs to reach the entirety of the Wallet of Satoshi list). If you set it to 10 sats/Satogram, about 110k sats.`
+		},
+		{
 			title: 'Who Can I send this to?',
 			content:
 				'You can send Satograms to any node who have keysends enabled or currently to any Wallet of Satoshi lightning address. Reach out to ~10 thousand people with your own custom message of up to ~1000 characters in only a few minutes.'
@@ -33,7 +38,7 @@
 			{
 			title: 'Distribution between Wallet of Satoshi and nodes',
 			content:
-				`Currently the site does not allow for customizing the breakdown of Satograms between these two. Budget will be used to pay all Wallet of Satoshi addresses before sending to nodes. In other words, in order to semd a Satogram to the first node, all Wallet of Satoshi addresses need to be sent Satograms first. Thus the Total Cost field should be set accordingly. Customization of this breakdown is a feature coming soon.`
+				`Currently the site does not allow for customizing the breakdown of Satograms between these two. Budget will be used to pay all Wallet of Satoshi addresses before sending to nodes. In other words, in order to send a Satogram to the first node, all Wallet of Satoshi addresses need to be sent Satograms first. Thus the Total Cost field should be set accordingly. Customization of this breakdown is a feature coming soon.`
 		},
 		{
 			title: 'Network Fee Limit',
@@ -298,7 +303,7 @@
 			<p><b>Create a Satogram</b></p>
 					<form class="flex flex-col w-1/2 justify-center">
 						<label for="totalAmount"
-							><b>Total Cost</b> (sats) recommendation to reach all: ~85,000 sats </label
+							><b>Total Cost</b> (sats) recommendation to reach all: ~85,000 sats (at 1 sat/Satogram) </label
 						>
 						<input
 							type="number"
