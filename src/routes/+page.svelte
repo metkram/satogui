@@ -21,6 +21,11 @@
 				'Satograms are lightning keysend payments that include a custom message. Think of it like spam email, but you get paid for it. When you receive a Satogram you have been paid by the sender! Reach out to thousands of people with your own custom message of up to ~1000 characters in only a few minutes.'
 		},
 		{
+			title: 'How much does it cost',
+			content:
+				`At 1 sat/Satogram, about 85k sats (Wallet of Satoshi has a 10 sat minimum, so about ~60k sats is what it costs to reach the entirety of the Wallet of Satoshi list). If you set it to 10 sats/Satogram, about 110k sats.`
+		},
+		{
 			title: 'Who Can I send this to?',
 			content:
 				'You can send Satograms to any node who have keysends enabled or currently to any Wallet of Satoshi lightning address. Reach out to ~10 thousand people with your own custom message of up to ~1000 characters in only a few minutes.'
@@ -48,7 +53,7 @@
 			{
 			title: 'Refunds',
 			content:
-				`The Total Cost field currently comes with a best guess estimate for what it will cost to Satogram all Wallet of Satoshi addresses and nodes (~100,000 sats). However network fees are not known until the payment is sent, making a perfect estimate impossible. In the case of over payment a refund can be issues for the over payment amount by contacting us (see contact info below). Example: Total Cost set to 100k sats. Actual costs to send all Satograms: 85k sats. A refund can be requested for the 15k difference. In the future this process will be automated.	`
+				`The Total Cost field currently comes with a best guess estimate for what it will cost to Satogram all Wallet of Satoshi addresses and nodes (~85,000 sats). However network fees are not known until the payment is sent, making a perfect estimate impossible. In the case of over payment a refund can be issues for the over payment amount by contacting us (see contact info below). Example: Total Cost set to 100k sats. Actual costs to send all Satograms: 85k sats. A refund can be requested for the 15k difference. In the future this process will be automated.	`
 		},
 		{
 			title: 'Future',
@@ -298,7 +303,7 @@
 			<p><b>Create a Satogram</b></p>
 					<form class="flex flex-col w-1/2 justify-center">
 						<label for="totalAmount"
-							><b>Total Cost</b> (sats) recommendation to reach all: ~85,000 sats </label
+							><b>Total Cost</b> (sats) recommendation to reach all: ~85,000 sats (at 1 sat/Satogram) </label
 						>
 						<input
 							type="number"
