@@ -23,12 +23,12 @@
 		{
 			title: 'How much does it cost',
 			content:
-				`At 1 sat/Satogram, about 85k sats (Wallet of Satoshi has a 10 sat minimum, so about ~60k sats is what it costs to reach the entirety of the Wallet of Satoshi list). If you set it to 10 sats/Satogram, about 110k sats.`
+				`At 1 sat/Satogram, about 15k sats. Each satogram costs the amount you set per satogram plus any lightning network fees. Additionally our serivce takes 10% of the invoiced amount. Exmple: Invocied 25,000 sats, our fee is 2,500 sats, leaving 22,500 sats for sending satograms.`
 		},
 		{
 			title: 'Who Can I send this to?',
 			content:
-				'You can send Satograms to any node who have keysends enabled or currently to any Wallet of Satoshi lightning address. Reach out to ~10 thousand people with your own custom message of up to ~1000 characters in only a few minutes.'
+				'You can send Satograms to any node who have keysends enabled or to a lightning address that supports comments. Reach out to ~11 thousand people with your own custom message of up to 1000 characters in only a few minutes.'
 		},
 		{
 			title: 'Why would I do this?',
@@ -36,9 +36,9 @@
 				'Whether you are a brand who wants to advertise your product, or a pleb who wants to wish the network a good morning, Satograms allow you to put your messaging directly in front of users. Folks are a lot more receptive to "spam" messaging if they are getting paid for it.'
 		},
 			{
-			title: 'Distribution between Wallet of Satoshi and nodes',
+			title: 'Distribution between lightning addresses and nodes',
 			content:
-				`Currently the site does not allow for customizing the breakdown of Satograms between these two. Budget will be used to pay all Wallet of Satoshi addresses before sending to nodes. In other words, in order to send a Satogram to the first node, all Wallet of Satoshi addresses need to be sent Satograms first. Thus the Total Cost field should be set accordingly. Customization of this breakdown is a feature coming soon.`
+				`Currently the site does not allow for customizing the breakdown of Satograms between these two. Budget will be used to pay all lightning addresses before sending to nodes. In other words, in order to send a Satogram to the first node, all lightning addresses need to be sent Satograms first. Thus the Total Cost field should be set accordingly. Customization of this breakdown is a feature coming soon.`
 		},
 		{
 			title: 'Network Fee Limit',
@@ -46,19 +46,9 @@
 				`The Network Fee Limit field is used to set the max fees paid for a lightning transaction. Example: With the field set to 5, a payment that costs 6 or more sats in routing fees will not succeed. If the fee limit set exceeds the actual routing fees, then the fees spent will equal the routing fees. Example: With the field set to 10, a payment that costs 6 sats to route will pay 6 sats in routing fees. The higher the fee limit set, the more possible routes that can be taken to settle the payment, increasing payment success likelihood.`
 		},
 		{
-			title: 'Wallet of Satoshi fees',
-			content:
-				`Wallet of Satoshi takes a 30% fee, and 10 sat minimum to show a Satogram. Example: 10 sat Satogram yields Wallet of Satoshi user 7 sats. If you set the satogram amount to less than 10 sats, 10 sats will be autmatically used for each Satogram sent to Wallet of Satoshi, but your set value will be used when sending to node pubkeys.`
-		},
-			{
 			title: 'Refunds',
 			content:
-				`The Total Cost field currently comes with a best guess estimate for what it will cost to Satogram all Wallet of Satoshi addresses and nodes (~85,000 sats). However network fees are not known until the payment is sent, making a perfect estimate impossible. In the case of over payment a refund can be issues for the over payment amount by contacting us (see contact info below). Example: Total Cost set to 100k sats. Actual costs to send all Satograms: 85k sats. A refund can be requested for the 15k difference. In the future this process will be automated.	`
-		},
-		{
-			title: 'Future',
-			content:
-				'Currently Wallet of Saotshi is the first custodial wallet provider to offer their users support for Satograms. Adding Satogram support is low effort and could be adopted by more custodial providers in the future (Strike? Cash App?). We will continue to grow our list of pubkeys and lightning addresses that we Satogram to, and if you have not received one reach out to us!'
+				`The Total Cost field currently comes with a best guess estimate for what it will cost to Satogram all lightning addresses and node pubkeys. However network fees are not known until the payment is sent, making a perfect estimate impossible. In the case of over payment a refund can be issues for the over payment amount by contacting us (see contact info below). Example: Total Cost set to 100k sats. Actual costs to send all Satograms: 85k sats. A refund can be requested for the 15k difference. In the future this process will be automated.	`
 		},
 		{
 			title: 'How much does this cost? How many people will receive my Satograms?',
@@ -249,7 +239,7 @@
 						<span>{totalAmount}</span>
 					</li>
 					<li>
-						<strong>Your node pubkey or Wallet of Satoshi lightning address: </strong>
+						<strong>Your node pubkey or lightning address: </strong>
 						<span>{senderAddress}</span>
 					</li>
 				</ul>
@@ -266,7 +256,7 @@
 						<span>{toWhom.total_count_pubkeys}</span>
 					</div>
 					<div class="flex justify-between md:block">
-						<strong> Total Wallet of Satoshi Addresses: </strong>
+						<strong> Total Lightning Addresses: </strong>
 						<span>{toWhom.total_count_wos_addresses}</span>
 					</div>
 					<div class="flex justify-between md:block">
@@ -280,11 +270,11 @@
 			{/if}
 			<form class="flex flex-col w-1/4 justify-center">
 				<label for="addMeAddress" style="text-align: center;"
-							>Want Satograms? Share your node pubkey or Wallet of Satoshi address</label
+							>Want Satograms? Share your node pubkey or lightning address</label
 						>
 						<input
 							type="text"
-							placeholder="030f...cdb7 or blah@walletofsatoshi.com"
+							placeholder="030f...cdb7 or blahblah@getalby.com"
 							name="addMeAddress"
 							maxlength="66"
 							required
@@ -303,7 +293,7 @@
 			<p><b>Create a Satogram</b></p>
 					<form class="flex flex-col w-1/2 justify-center">
 						<label for="totalAmount"
-							><b>Total Cost</b> (sats) recommendation to reach all: ~85,000 sats (at 1 sat/Satogram) </label
+							><b>Total Cost</b> (sats) recommendation to reach all: ~15,000 sats (at 1 sat/Satogram) </label
 						>
 						<input
 							type="number"
@@ -345,10 +335,10 @@
 							required
 							bind:value={message}
 						/>
-						<label for="senderAddress"><b>Your node pubkey or Wallet of Satoshi lightning address</b> (optional)</label>
+						<label for="senderAddress"><b>Your node pubkey or lightning address</b> (optional)</label>
 						<input
 							type="text"
-							placeholder="0309bf5f....cd8db7 or blah-blah-blah@walletofsatoshi.com"
+							placeholder="0309bf5f....cd8db7 or blah-blah-blah@vlt.ge"
 							name="senderAddress"
 							maxlength="66"
 							bind:value={senderAddress}
