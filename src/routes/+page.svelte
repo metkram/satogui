@@ -51,11 +51,6 @@
 				`The Total Cost field currently comes with a best guess estimate for what it will cost to Satogram all lightning addresses and node pubkeys. However network fees are not known until the payment is sent, making a perfect estimate impossible. In the case of over payment a refund can be issues for the over payment amount by contacting us (see contact info below). Example: Total Cost set to 100k sats. Actual costs to send all Satograms: 85k sats. A refund can be requested for the 15k difference. In the future this process will be automated.	`
 		},
 		{
-			title: 'Future',
-			content:
-				'Currently Wallet of Saotshi is the first custodial wallet provider to offer their users support for Satograms. Adding Satogram support is low effort and could be adopted by more custodial providers in the future (Strike? Cash App?). We will continue to grow our list of pubkeys and lightning addresses that we Satogram to, and if you have not received one reach out to us!'
-		},
-		{
 			title: 'How much does this cost? How many people will receive my Satograms?',
 			content:
 				'We charge a 10% fee for our service. For example, if you pay our invoice for 10,000 sats, we will send out 9,000 sats worth of Satograms. Note that ligthning network fees are not entirely known up front, and this makes calculating with certainty how many Satograms will be sent using this 9,000 sat budget.'
