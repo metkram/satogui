@@ -23,7 +23,7 @@
 		{
 			title: 'How much does it cost',
 			content:
-				`At 1 sat/Satogram, about 50k sats. Each satogram costs the amount you set per satogram plus any lightning network fees. Additionally our serivce takes 10% of the invoiced amount. Exmple: Invocied 50,000 sats, our fee is 5,000 sats, leaving 45,000 sats for sending satograms.`
+				`At 1 sat/Satogram, about 65k sats. Each satogram costs the amount you set per satogram plus any lightning network fees. Additionally our serivce takes 10% of the invoiced amount. Exmple: Invoiced 65,000 sats, our fee is 6,500 sats, leaving 58,500 sats for sending satograms.`
 		},
 		{
 			title: 'Who Can I send this to?',
@@ -293,7 +293,7 @@
 			<p><b>Create a Satogram</b></p>
 					<form class="flex flex-col w-1/2 justify-center">
 						<label for="totalAmount"
-							><b>Total Cost</b> (sats) recommendation to reach all: ~50,000 sats (at 1 sat/Satogram) </label
+							><b>Total Cost</b> (sats) recommendation to reach all: ~65,000 sats (at 1 sat/Satogram) </label
 						>
 						<input
 							type="number"
