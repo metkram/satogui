@@ -216,7 +216,7 @@
 	<section class="flex flex-col gap-4 items-center">
 		{#if paid}
 			<Alert mood={Mood.good} title="Success" closed={!paid} {close}>
-				Your Satogram has been sent!
+				Payment received, your Satograms will be sent! Use the "Check Satogram Status" tool on the homepage to check on the status.
 			</Alert>
 		{:else if !error && invoice}
 			<div>
